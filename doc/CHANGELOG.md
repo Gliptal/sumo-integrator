@@ -2,11 +2,9 @@
 #### **ADDED**
 - `makefile`
 - integration library
-- [ego-basic](doc/README.md#ego-basic) test
-- [output-basic](doc/README.md#output-basic) test
----
+- [ego-basic](README.md#ego-basic) test
+- [output-basic](README.md#output-basic) test
 
 ## 0.0.0 - (2018-11-09)
 #### **ADDED**
 - folder structure
----

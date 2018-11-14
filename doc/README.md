@@ -5,16 +5,9 @@
 - [DESCRIPTION](#description)
 - [FOLDER STRUCTURE](#folder-structure)
 - [CODE CONVENTIONS](#code-conventions)
-    - [FILE STRUCTURE](#file-structure)
-    - [CLASS STRUCTURE](#class-structure)
-    - [CODE FORMATTING](#code-formatting)
-    - [HEADER GUARDS](#header-guards)
-    - [INCLUDES](#includes)
-    - [INDENTATION](#indentation)
-    - [NAMING](#naming)
 - [TESTING](#testing--todo-add-output-basic)
-    - [EGO-BASIC](#ego-basic)
     - [OUTPUT-BASIC](#output-basic)
+    - [EGO-BASIC](#ego-basic)
 - [CHANGELOG](#changelog)
 
 <!-- /TOC -->

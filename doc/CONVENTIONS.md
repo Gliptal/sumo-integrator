@@ -39,7 +39,7 @@ Entities SHOULD be ordered as:
 
 ## CODE FORMATTING
 
-See the [.clang-format](.clang-format) file.
+See the [.clang-format](../.clang-format) file.
 
 ## HEADER GUARDS
 
