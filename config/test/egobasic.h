@@ -5,7 +5,7 @@ namespace Settings {
 
 namespace Network {
 
-const std::string IP = "192.168.1.100";
+const std::string IP = "127.0.0.1";
 const uint PORT      = 6666;
 
 }  // namespace Network

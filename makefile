@@ -3,6 +3,7 @@
 ##
 
 LIB_NAME = integrator
+GIT_REPO = https://raw.githubusercontent.com/Gliptal/sumo-integrator/master
 
 
 ##
@@ -11,7 +12,7 @@ LIB_NAME = integrator
 
 DIR_BIN     = bin
 DIR_BUILD   = build
-DIR_CONFID  = config
+DIR_CONFIG  = config
 DIR_INCLUDE = include
 DIR_LIB     = lib
 DIR_SRC     = src
@@ -31,6 +32,9 @@ CPP_LIBS    = -L$(DIR_BIN) -L$(DIR_LIB)/sumo -l$(LIB_NAME) -lsumo
 LIB       = ar
 LIB_FLAGS = -crs
 
+WGET       = wget
+WGET_FLAGS = -q
+
 
 ##
 ## OUTPUT
@@ -38,18 +42,19 @@ LIB_FLAGS = -crs
 
 COLOR_RESET  = $$(tput sgr0)
 COLOR_TARGET = $$(tput bold)
-COLOR_REMOVE = $$(tput setaf 3)
+COLOR_DOWN   = $$(tput setaf 93)
+COLOR_CLEAN  = $$(tput setaf 3)
 COLOR_BUILD  = $$(tput setaf 6)
 COLOR_LINK   = $$(tput setaf 2)
 COLOR_PACK   = $$(tput setaf 5)
-FILE_COLOR   = "\033[0;36m"
 
 print-title = printf "%s:\n" $1
-print-help  = printf "%6s%-48s%s\n" "" "$(COLOR_TARGET)$1$(COLOR_RESET)" $2
-print-clean = printf "%-24s%s\n" "$(COLOR_REMOVE)[ CLEAN ]$(COLOR_RESET)" $1
-print-build = printf "%-24s%s\n" "$(COLOR_BUILD)[ BUILD ]$(COLOR_RESET)" $1
-print-link  = printf "%-24s%s\n" "$(COLOR_LINK)[ LINK  ]$(COLOR_RESET)" $1
-print-pack  = printf "%-24s%s\n" "$(COLOR_PACK)[ PACK  ]$(COLOR_RESET)" $1
+print-help  = printf "%4s$(COLOR_TARGET)%-36s$(COLOR_RESET)%s\n" "" "$1" $2
+print-down  = printf "$(COLOR_DOWN)%-12s$(COLOR_RESET)%s\n" "[ DOWN  ]" $1
+print-clean = printf "$(COLOR_CLEAN)%-12s$(COLOR_RESET)%s\n" "[ CLEAN ]" $1
+print-build = printf "$(COLOR_BUILD)%-12s$(COLOR_RESET)%s\n" "[ BUILD ]" $1
+print-link  = printf "$(COLOR_LINK)%-12s$(COLOR_RESET)%s\n" "[ LINK  ]" $1
+print-pack  = printf "$(COLOR_PACK)%-12s$(COLOR_RESET)%s\n" "[ PACK  ]" $1
 
 filter-libs = $(filter-out $(DIR_LIB)/sumo/%.h,$1)
 
@@ -58,7 +63,7 @@ filter-libs = $(filter-out $(DIR_LIB)/sumo/%.h,$1)
 ## OPTIONS
 ##
 
-.PHONY: help all clean cleanall library test-ego-basic test-output-basic
+.PHONY: help all reset clean cleanall library test-ego-basic test-output-basic
 
 
 ##
@@ -69,6 +74,7 @@ help:
 	@$(call print-title,"UTILITY")
 	@$(call print-help,"help","lists all available targets")
 	@$(call print-help,"all","builds everything")
+	@$(call print-help,"reset","resets the configuration files")
 	@$(call print-help,"clean","removes build files")
 	@$(call print-help,"cleanall","removes build and binary files")
 	@$(call print-title,"LIBRARY")
@@ -77,6 +83,13 @@ help:
 	@$(call print-help,"test-ego-basic","builds the ego-basic test")
 
 all: library test-ego-basic test-output-basic
+
+reset:
+	@set -e; \
+	for file in $(DIR_CONFIG)/test/*.h; do \
+		$(call print-down,$$file); \
+		$(WGET) $(WGET_FLAGS) -O $(DIR_CONFIG)/test/$$(basename $$file) $(GIT_REPO)/$(DIR_CONFIG)/test/$$(basename $$file); \
+	done
 
 clean:
 	@$(call print-clean,"build folder")
