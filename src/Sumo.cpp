@@ -1,4 +1,5 @@
 #include "include/Integrator/Sumo.h"
+#include "include/Integrator/debug.h"
 
 #include <lib/sumo/libsumo.h>
 
@@ -20,7 +21,7 @@ bool Sumo::connect(const std::string ip, const uint port) {
     try {
         TraCIAPI::connect(ip, port);
 
-#if DEBUG_LEVEL >= 1
+#if DEBUG_LEVEL >= DEBUG_INFO
         std::cout << std::left << std::setw(12) << "[ CONN ]" << std::setw(12) << "[  OK  ]"
                   << "connected to " << ip << ":" << port << std::endl;
 #endif
@@ -28,7 +29,7 @@ bool Sumo::connect(const std::string ip, const uint port) {
         return true;
     }
     catch (tcpip::SocketException except) {
-#if DEBUG_LEVEL >= 1
+#if DEBUG_LEVEL >= DEBUG_INFO
         std::cout << std::left << std::setw(12) << "[ CONN ]" << std::setw(12) << "[ FAIL ]"
                   << "connecting to " << ip << ":" << port << std::endl;
 #endif
@@ -40,7 +41,7 @@ bool Sumo::connect(const std::string ip, const uint port) {
 void Sumo::close() {
     TraCIAPI::close();
 
-#if DEBUG_LEVEL >= 1
+#if DEBUG_LEVEL >= DEBUG_INFO
     std::cout << std::left << std::setw(12) << "[ CONN ]" << std::setw(12) << "[  OK  ]"
               << "closed" << std::endl;
 #endif
@@ -49,8 +50,8 @@ void Sumo::close() {
 void Sumo::tick() {
     simulationStep();
 
-#if DEBUG_LEVEL >= 3
-    std::cout << std::left << std::setw(12) << "[ STEP ]" << std::setw(12) << "[  OK  ]" << std::endl;
+#if DEBUG_LEVEL >= DEBUG_ALL
+    std::cout << std::left << std::setw(12) << "[ TICK ]" << std::setw(12) << "[  OK  ]" << std::endl;
 #endif
 }
 
@@ -66,7 +67,7 @@ bool Sumo::subscribe(const ENTITY_TYPE type, const std::string id, const std::ve
     return true;
 }
 
-libsumo::TraCIResults Sumo::get_data(const ENTITY_TYPE type, const std::string id) {
+libsumo::TraCIResults Sumo::get_datafeed(const ENTITY_TYPE type, const std::string id) {
     switch (type) {
         case VEHICLE:
             return vehicle.getSubscriptionResults(id);

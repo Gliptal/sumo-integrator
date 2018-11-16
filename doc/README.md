@@ -1,3 +1,5 @@
+# README
+
 ## CONTENTS
 
 <!-- TOC -->
@@ -14,9 +16,9 @@
 
 ## DESCRIPTION
 
-Integrator is a C++ static library that provides abstract integration tools geared towards connecting [SUMO](http://sumo.dlr.de/index.html) with a (any) graphic engine(s).
+sumo-integrator is a C++ static library that provides abstract integration tools geared towards connecting [SUMO](http://sumo.dlr.de/index.html) with a (any) graphic engine(s).
 
-Integrator is currently compiled and developed for Unix systems only (`.a`); accordingly, the functionality tests are provided as `.out` executables.
+sumo-integrator is currently compiled and developed for Unix systems only (`.a`); accordingly, the functionality tests are provided as `.out` executables.
 
 ## FOLDER STRUCTURE
 
@@ -52,11 +54,11 @@ Files related and required by SUMO are _not_ part of this repository.
 
 ### OUTPUT-BASIC
 
-**SCOPE -** This functionality test ensures that data about SUMO-driven vehicles can be correctly obtained from the SUMO process.
+**SCOPE** - This functionality test ensures that data about SUMO-driven vehicles can be correctly obtained from the SUMO process.
 
-**SETUP -** The network is formed by a single two-lane road looped in the shape of a rectangle (dimensioned at 100m x 200m). The SUMO vehicle (yellow car) spawns  adjacent to the North-West corner of the loop.
+**SETUP** - The network is formed by a single two-lane road looped in the shape of a rectangle (dimensioned at 100m x 200m). The SUMO vehicle (yellow car) spawns  adjacent to the North-West corner of the loop.
 
-**RUN -** SUMO must be started _before_ `outputbasic.out` with the following options:
+**RUN** - SUMO must be started _before_ `outputbasic.out` with the following options:
 
 ```
 -c outputbasic.sumocfg
@@ -64,15 +66,15 @@ Files related and required by SUMO are _not_ part of this repository.
 --default.action-step-length 0.01
 ```
 
-**RESULT -** The SUMO car (yellow) should drive the loop in the right lane; its position, angle, and speed should be displayed on the `stdout` device.
+**RESULT** - The SUMO car (yellow) should drive the loop in the right lane; its position, angle, and speed should be displayed on the `stdout` device.
 
 ### EGO-BASIC
 
-**SCOPE -** This functionality test ensures that SUMO-driven vehicles correctly interact (e.g. avoid, overtake) a programmatically-driven ego vehicle.
+**SCOPE** - This functionality test ensures that SUMO-driven vehicles correctly interact (e.g. avoid, overtake) a programmatically-driven ego vehicle.
 
-**SETUP -** The network is formed by a single two-lane road, looped in the shape of a rectangle (dimensioned at 100m x 200m). The ego vehicle (red car) and  the SUMO vehicles (yellow cars) spawn adjacent to the North-West corner of the loop, at different times.
+**SETUP** - The network is formed by a single two-lane road, looped in the shape of a rectangle (dimensioned at 100m x 200m). The ego vehicle (red car) and  the SUMO vehicles (yellow cars) spawn adjacent to the North-West corner of the loop, at different times.
 
-**RUN -** SUMO must be started _before_ `egobasic.out` with the following options:
+**RUN** - SUMO must be started _before_ `egobasic.out` with the following options:
 
 ```
 -c egobasic.sumocfg
@@ -81,7 +83,7 @@ Files related and required by SUMO are _not_ part of this repository.
 --lateral-resolution 100
 ```
 
-**RESULT -** The ego car (red) should drive the loop in the right lane at different speeds; the SUMO cars (yellow) should also drive the loop, organically overtaking the ego car (and possibly each other). Some imprecisions in the curved sections of the road is to be expected.
+**RESULT** - The ego car (red) should drive the loop in the right lane at different speeds; the SUMO cars (yellow) should also drive the loop, organically overtaking the ego car (and possibly each other). Some imprecisions in the curved sections of the road is to be expected.
 
 ## CHANGELOG
 

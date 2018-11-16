@@ -13,6 +13,7 @@ GIT_REPO = https://raw.githubusercontent.com/Gliptal/sumo-integrator/master
 DIR_BIN     = bin
 DIR_BUILD   = build
 DIR_CONFIG  = config
+DIR_DOC     = doc
 DIR_INCLUDE = include
 DIR_LIB     = lib
 DIR_SRC     = src
@@ -25,7 +26,7 @@ DIR_TEST    = test
 
 CPP         = g++
 CPP_FLAGS   = -std=c++11 -Wall
-CPP_DEFINES = -DDEBUG_LEVEL=2
+CPP_DEFINES = -DDEBUG_LEVEL=DEBUG_DATA
 CPP_INCLUDE = -I .
 CPP_LIBS    = -L$(DIR_BIN) -L$(DIR_LIB)/sumo -l$(LIB_NAME) -lsumo
 
@@ -34,6 +35,8 @@ LIB_FLAGS = -crs
 
 WGET       = wget
 WGET_FLAGS = -q
+
+DOC = doxygen
 
 
 ##
@@ -63,7 +66,7 @@ filter-libs = $(filter-out $(DIR_LIB)/sumo/%.h,$1)
 ## OPTIONS
 ##
 
-.PHONY: help all reset clean cleanall library test-ego-basic test-output-basic
+.PHONY: help all reset clean clean-docs clean-all docs-html library test-ego-basic test-output-basic
 
 
 ##
@@ -76,7 +79,9 @@ help:
 	@$(call print-help,"all","builds everything")
 	@$(call print-help,"reset","resets the configuration files")
 	@$(call print-help,"clean","removes build files")
-	@$(call print-help,"cleanall","removes build and binary files")
+	@$(call print-help,"clean-docs","removes compiled documentation files")
+	@$(call print-help,"clean-all","removes build and binary files")
+	@$(call print-help,"docs-html","generates html documentation")
 	@$(call print-title,"LIBRARY")
 	@$(call print-help,"library","builds the library")
 	@$(call print-title,"TESTS")
@@ -95,9 +100,18 @@ clean:
 	@$(call print-clean,"build folder")
 	-@rm -f $(DIR_BUILD)/*.o $(DIR_BUILD)/*.d
 
-cleanall: clean
+clean-docs:
+	@$(call print-clean,"compiled documentation folder")
+	-@rm -rf $(DIR_DOC)/doxygen/output
+
+clean-all: clean
 	@$(call print-clean,"bin folder")
 	-@rm -f $(DIR_BIN)/*.out $(DIR_BIN)/*.a
+
+docs-html:
+	@$(call print-build, "documentation")
+	@cd doc/doxygen; \
+	doxygen doxyfile
 
 
 ##

@@ -36,7 +36,7 @@ int main() {
             }
 
             if (step >= spawnStep) {
-                libsumo::TraCIResults results = sumo.get_data(Sumo::ENTITY_TYPE::VEHICLE, Settings::Traffic::ID);
+                libsumo::TraCIResults results = sumo.get_datafeed(Sumo::ENTITY_TYPE::VEHICLE, Settings::Traffic::ID);
 
                 Position* position          = (Position*) results[VAR_POSITION3D].get();
                 libsumo::TraCIDouble* angle = (libsumo::TraCIDouble*) results[VAR_ANGLE].get();
