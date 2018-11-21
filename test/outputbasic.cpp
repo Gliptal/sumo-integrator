@@ -30,13 +30,13 @@ int main() {
             if (step == spawnStep) {
                 std::vector<int> request {VAR_POSITION3D, VAR_ANGLE, VAR_SPEED};
 
-                sumo.subscribe(Sumo::ENTITY_TYPE::VEHICLE, Settings::Traffic::ID, request, Settings::Traffic::START_TIME, Settings::Simulation::END_TIME);
+                sumo.subscribe(sumo.vehicle, Settings::Traffic::ID, request, Settings::Traffic::START_TIME, Settings::Simulation::END_TIME);
 
                 std::cout << "\n";
             }
 
             if (step >= spawnStep) {
-                libsumo::TraCIResults results = sumo.get_datafeed(Sumo::ENTITY_TYPE::VEHICLE, Settings::Traffic::ID);
+                libsumo::TraCIResults results = sumo.get_datafeed(sumo.vehicle, Settings::Traffic::ID);
 
                 Position* position          = (Position*) results[VAR_POSITION3D].get();
                 libsumo::TraCIDouble* angle = (libsumo::TraCIDouble*) results[VAR_ANGLE].get();

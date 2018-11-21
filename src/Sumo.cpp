@@ -17,7 +17,7 @@ Sumo::Sumo() {
 Sumo::~Sumo() {
 }
 
-bool Sumo::connect(const std::string ip, const uint port) {
+bool Sumo::connect(const std::string& ip, const uint port) {
     try {
         TraCIAPI::connect(ip, port);
 
@@ -55,29 +55,15 @@ void Sumo::tick() {
 #endif
 }
 
-bool Sumo::subscribe(const ENTITY_TYPE type, const std::string id, const std::vector<int>& request, const double start, const double end) {
-    switch (type) {
-        case VEHICLE:
-            vehicle.subscribe(id, request, start, end);
-            break;
-        default:
-            return false;
-    }
-
-    return true;
+void Sumo::subscribe(TraCIAPI::TraCIScopeWrapper& entity, const std::string& id, const std::vector<int>& request, const double start, const double end) {
+    entity.subscribe(id, request, start, end);
 }
 
-libsumo::TraCIResults Sumo::get_datafeed(const ENTITY_TYPE type, const std::string id) {
-    switch (type) {
-        case VEHICLE:
-            return vehicle.getSubscriptionResults(id);
-        default:
-            libsumo::TraCIResults nothing;
-            return nothing;
-    }
+libsumo::TraCIResults Sumo::get_datafeed(TraCIAPI::TraCIScopeWrapper& entity, const std::string& id) {
+    return entity.getSubscriptionResults(id);
 }
 
-void Sumo::move_ego(const std::string id, const Position position) {
+void Sumo::move_ego(const std::string& id, const Position& position) {
     vehicle.moveToXY(id, "", 0, position.x, position.y, -1073741824, 2);
 }
 

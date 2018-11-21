@@ -13,8 +13,8 @@ namespace Integrator {
 ///
 /// @AUTHOR            Mattia Affabris - mattia.affabris@antemotion.com
 /// @DATE              2018-11-14
-/// @VERSION           0.1.0
-/// @VERSION           1
+/// @VERSION           0.2.0
+/// @VERSION           2
 /// @COPYRIGHT         Copyright (C) (2018) AnteMotion
 ///
 /// @BRIEF  Wraps common TraCIAPI functions.
@@ -22,19 +22,10 @@ namespace Integrator {
 /// Provides high-level, generic functionality to use SUMO's C++ TraCIAPI library. All TraCIAPI methods are wrapped into
 /// an organic and consistent interface, based on integration development requirements.
 ///
-/// @NOTE  Major changes are expected.
+/// @NOTE  Major changes are to be expected.
 ///
 class Sumo : public TraCIAPI {
 public:
-    ///
-    /// @BRIEF  Type of an entity.
-    ///
-    /// @NOTE  Temporary only.
-    ///
-    /// @TODO  Generalize by providing `TraCIAPI::TraCIScopeWrapper` to methods instead.
-    ///
-    enum ENTITY_TYPE { VEHICLE };
-
     ///
     /// @BRIEF  Construct a new Sumo object.
     ///
@@ -57,15 +48,15 @@ public:
     /// @RETURN         bool  `true` if a connection could be established, `false` otherwise.
     ///
     /// @DEBUG
-    /// DEBUG_INFO - Success/Failure of the connection attempt notification.
+    /// `DEBUG_INFO` - Success/Failure of the connection attempt notification.
     ///
-    bool connect(const std::string, const uint);
+    bool connect(const std::string&, const uint);
 
     ///
     /// @BRIEF  Closes the connection to SUMO's server instance.
     ///
     /// @DEBUG
-    /// DEBUG_INFO - Connection closed notification.
+    /// `DEBUG_INFO` - Connection closed notification.
     ///
     void close();
 
@@ -77,7 +68,7 @@ public:
     /// @NOTE  SUMO halts its simulation until this method is called.
     ///
     /// @DEBUG
-    /// DEBUG_ALL - Simulation tick notification.
+    /// `DEBUG_ALL` - Simulation tick notification.
     ///
     void tick();
 
@@ -93,21 +84,18 @@ public:
     /// `start`  seconds (s)\n
     /// `end`    seconds (s)
     ///
-    /// @PARAM[in]      type     The type of entity whose feed to subscribe to.
+    /// @PARAM[in]      entity   The type of entity whose feed to subscribe to.
     /// @PARAM[in]      id       The `id` of the entity whose feed to subscribe to.
     /// @PARAM[in]      request  The data requested to be in the entity's feed.
     /// @PARAM[in]      start    The time the subscription starts taking effect.
     /// @PARAM[in]      end      The time the subscription stops taking effect.
     ///
-    /// @RETURN         bool  `true` if the subscription was successful, `false` otherwise.
-    ///
     /// @DEBUG
-    /// DEBUG_INFO -
+    /// `DEBUG_INFO` -
     ///
-    /// @TODO  Generalize by providing `TraCIAPI::TraCIScopeWrapper` to method instead.
     /// @TODO  DEBUG_INFO
     ///
-    bool subscribe(const ENTITY_TYPE, const std::string, const std::vector<int>&, const double, const double);
+    void subscribe(TraCIAPI::TraCIScopeWrapper&, const std::string&, const std::vector<int>&, const double, const double);
 
     ///
     /// @BRIEF  Get an entity's data feed.
@@ -116,18 +104,17 @@ public:
     ///
     /// @WARNING  Data feeds returned from unsubscribed entities result in undefined behaviour.
     ///
-    /// @PARAM[in]      type  The type of entity whose feed to obtain.
-    /// @PARAM[in]      id    The `id` of the entity whose feed to obtain.
+    /// @PARAM[in]      entity  The type of entity whose feed to obtain.
+    /// @PARAM[in]      id      The `id` of the entity whose feed to obtain.
     ///
     /// @RETURN  libsumo::TraCIResults
     ///
     /// @DEBUG
-    /// DEBUG_DATA -
+    /// `DEBUG_DATA` -
     ///
-    /// @TODO  Generalize by providing `TraCIAPI::TraCIScopeWrapper` to method instead.
     /// @TODO  DEBUG_DATA
     ///
-    libsumo::TraCIResults get_datafeed(const ENTITY_TYPE, const std::string);
+    libsumo::TraCIResults get_datafeed(TraCIAPI::TraCIScopeWrapper&, const std::string&);
 
     ///
     /// @BRIEF  Position an ego vehicle.
@@ -138,7 +125,7 @@ public:
     /// @PARAM[in]      id        The `id` of the ego vehicle.
     /// @PARAM[in]      position  The target `3D` position.
     ///
-    void move_ego(const std::string, const Position);
+    void move_ego(const std::string&, const Position&);
 };
 
 }  // namespace Integrator
