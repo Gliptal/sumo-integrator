@@ -17,6 +17,7 @@ public:
     virtual ~Driver();
 
     Position get_position();
+    double get_speed();
     void set_speed(const double);
 
 protected:

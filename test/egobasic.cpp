@@ -15,7 +15,7 @@ int main() {
         StaticDriver ego = StaticDriver(Settings::Simulation::TICKRATE);
         ego.load_network(Settings::Simulation::NETWORK, 4);
         ego.set_spawn(Settings::Ego::SPAWN_POSITION[0], Settings::Ego::SPAWN_POSITION[1], Settings::Ego::SPAWN_POSITION[2]);
-        ego.set_speed(Settings::Ego::MAX_SPEED);
+        ego.set_speed(Settings::Ego::MAX_SPEED / 2);
 
         Sumo sumo;
         sumo.connect(Settings::Network::IP, Settings::Network::PORT);
@@ -24,6 +24,12 @@ int main() {
 
         uint steps = Settings::Simulation::END_TIME / Settings::Simulation::TICKRATE;
         for (uint step = 0; step < steps; step++) {
+            ego.vary_speed(0.001, Settings::Ego::MIN_SPEED, Settings::Ego::MAX_SPEED, 3.0);
+
+            std::cout << "\x1b[A\r" << std::flush;
+            printf("v = %5.2f (m/s)", ego.get_speed());
+            std::cout << "\n";
+
             ego.tick();
             sumo.move_ego(Settings::Ego::ID, ego.get_position());
             sumo.tick();

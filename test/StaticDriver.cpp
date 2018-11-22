@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include <cstdlib>
+
 
 namespace Test {
 
@@ -21,6 +23,19 @@ void StaticDriver::set_spawn(const double x, const double y, const double z) {
     position.x = x;
     position.y = y;
     position.z = z;
+}
+
+void StaticDriver::vary_speed(const double rate, const double min, const double max, const double var) {
+    double random = ((double) rand()) / RAND_MAX;
+
+    if (random <= rate) {
+        double delta;
+        do {
+            delta = -var + (((double) rand()) / RAND_MAX * (var + var));
+        } while (speed + delta < min || speed + delta > max);
+
+        speed += delta;
+    }
 }
 
 void StaticDriver::tick() {

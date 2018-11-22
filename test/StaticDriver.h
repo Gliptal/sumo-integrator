@@ -16,6 +16,7 @@ public:
 
     void load_network(const double[][3], const size_t);
     void set_spawn(const double, const double, const double);
+    void vary_speed(const double, const double, const double, const double);
     void tick();
 };
 

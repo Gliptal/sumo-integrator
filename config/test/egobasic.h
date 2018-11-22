@@ -29,7 +29,9 @@ namespace Ego {
 
 const double SPAWN_POSITION[3] = {-191.67, 98.40, 0.00};
 const std::string ID           = "EGO";
-const double MAX_SPEED         = 6;
+
+const double MIN_SPEED = 2;
+const double MAX_SPEED = 8;
 
 }  // namespace Ego
 
