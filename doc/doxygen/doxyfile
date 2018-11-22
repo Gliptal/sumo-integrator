@@ -37,11 +37,12 @@ ALIASES                = AUTHOR=@author \
                          PARAM=@param \
                          RETURN=@returns \
                          SEE=@see \
+                         THROWS=@throws \
                          TODO=@todo \
                          VERSION=@version \
                          WARNING=@warning \
-                         UNITS="@par Units<br>" \
-                         DEBUG="@par Debug<br>"
+                         DEBUG="@par Debug<br>" \
+                         UNITS="@par Units<br>"
 TCL_SUBST              =
 OPTIMIZE_OUTPUT_FOR_C  = NO
 OPTIMIZE_OUTPUT_JAVA   = NO

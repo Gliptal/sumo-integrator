@@ -26,7 +26,7 @@ DIR_TEST    = test
 
 CPP         = g++
 CPP_FLAGS   = -std=c++11 -Wall
-CPP_DEFINES = -DDEBUG_LEVEL=DEBUG_DATA
+CPP_DEFINES = -DDEBUG_LEVEL=DEBUG_INFO
 CPP_INCLUDE = -I .
 CPP_LIBS    = -L$(DIR_BIN) -L$(DIR_LIB)/sumo -l$(LIB_NAME) -lsumo
 

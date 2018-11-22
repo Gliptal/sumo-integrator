@@ -14,7 +14,7 @@ namespace Integrator {
 /// @AUTHOR            Mattia Affabris - mattia.affabris@antemotion.com
 /// @DATE              2018-11-14
 /// @VERSION           0.2.0
-/// @VERSION           2
+/// @VERSION           3
 /// @COPYRIGHT         Copyright (C) (2018) AnteMotion
 ///
 /// @BRIEF  Wraps common TraCIAPI functions.
@@ -45,18 +45,18 @@ public:
     /// @PARAM[in]      port  Port number of the SUMO server process running on the hosting machine (SUMO's
     ///                       `--remote-port` option).
     ///
-    /// @RETURN         bool  `true` if a connection could be established, `false` otherwise.
+    /// @THROWS         tcpip::SocketException  If a connection could not be established.
     ///
     /// @DEBUG
-    /// `DEBUG_INFO` - Success/Failure of the connection attempt notification.
+    /// `DEBUG_INFO` - Attempt at opening the connection.
     ///
-    bool connect(const std::string&, const uint);
+    void connect(const std::string&, const uint);
 
     ///
     /// @BRIEF  Closes the connection to SUMO's server instance.
     ///
     /// @DEBUG
-    /// `DEBUG_INFO` - Connection closed notification.
+    /// `DEBUG_INFO` - Closing the connection.
     ///
     void close();
 
@@ -68,7 +68,7 @@ public:
     /// @NOTE  SUMO halts its simulation until this method is called.
     ///
     /// @DEBUG
-    /// `DEBUG_ALL` - Simulation tick notification.
+    /// `DEBUG_DATA` - Simulation tick.
     ///
     void tick();
 
@@ -91,9 +91,7 @@ public:
     /// @PARAM[in]      end      The time the subscription stops taking effect.
     ///
     /// @DEBUG
-    /// `DEBUG_INFO` -
-    ///
-    /// @TODO  DEBUG_INFO
+    /// `DEBUG_INFO` - Subscription target.
     ///
     void subscribe(TraCIAPI::TraCIScopeWrapper&, const std::string&, const std::vector<int>&, const double, const double);
 
@@ -110,9 +108,7 @@ public:
     /// @RETURN  libsumo::TraCIResults
     ///
     /// @DEBUG
-    /// `DEBUG_DATA` -
-    ///
-    /// @TODO  DEBUG_DATA
+    /// `DEBUG_DATA` - Amount of data received from the subscription.
     ///
     libsumo::TraCIResults get_datafeed(TraCIAPI::TraCIScopeWrapper&, const std::string&);
 

@@ -13,13 +13,8 @@ using namespace Integrator;
 
 int main() {
     try {
-        bool success;
-
         Sumo sumo;
-
-        success = sumo.connect(Settings::Network::IP, Settings::Network::PORT);
-        if (!success)
-            return 1;
+        sumo.connect(Settings::Network::IP, Settings::Network::PORT);
 
         uint steps = Settings::Simulation::END_TIME / Settings::Simulation::TICKRATE;
         for (uint step = 0; step < steps; step++) {
@@ -38,12 +33,12 @@ int main() {
             if (step >= spawnStep) {
                 libsumo::TraCIResults results = sumo.get_datafeed(sumo.vehicle, Settings::Traffic::ID);
 
-                Position* position          = (Position*) results[VAR_POSITION3D].get();
-                libsumo::TraCIDouble* angle = (libsumo::TraCIDouble*) results[VAR_ANGLE].get();
-                libsumo::TraCIDouble* speed = (libsumo::TraCIDouble*) results[VAR_SPEED].get();
+                Position* position = (Position*) results[VAR_POSITION3D].get();
+                double angle       = ((libsumo::TraCIDouble*) results[VAR_ANGLE].get())->value;
+                double speed       = ((libsumo::TraCIDouble*) results[VAR_SPEED].get())->value;
 
                 std::cout << "\x1b[A\r" << std::flush;
-                printf("x = %6.2f (m), y = %6.2f (m), z = %.2f (m) | a = %6.2f (deg) | v = %5.2f (m/s)", position->x, position->y, position->z, angle->value, speed->value);
+                printf("x = %6.2f (m), y = %6.2f (m), z = %.2f (m) | a = %6.2f (deg) | v = %5.2f (m/s)", position->x, position->y, position->z, angle, speed);
                 std::cout << "\n";
             }
         }
@@ -52,7 +47,7 @@ int main() {
 
         return 0;
     }
-    catch (tcpip::SocketException except) {
+    catch (...) {
         return 1;
     }
 }
