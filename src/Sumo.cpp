@@ -42,6 +42,12 @@ void Sumo::tick() {
     LOG_DATA("tick")
 }
 
+void Sumo::tick(const double time) {
+    simulationStep(time);
+
+    LOG_DATA("tick");
+}
+
 void Sumo::subscribe(TraCIAPI::TraCIScopeWrapper& entity, const std::string& id, const std::vector<int>& request, const double start, const double end) {
     entity.subscribe(id, request, start, end);
 

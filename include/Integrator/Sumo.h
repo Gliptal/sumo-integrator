@@ -14,7 +14,7 @@ namespace Integrator {
 /// @AUTHOR            Mattia Affabris - mattia.affabris@antemotion.com
 /// @DATE              2018-11-14
 /// @VERSION           0.2.0
-/// @VERSION           3
+/// @VERSION           4
 /// @COPYRIGHT         Copyright (C) (2018) AnteMotion
 ///
 /// @BRIEF  Wraps common TraCIAPI functions.
@@ -71,6 +71,26 @@ public:
     /// `DEBUG_DATA` - Simulation tick.
     ///
     void tick();
+
+    ///
+    /// @BRIEF  Runs the SUMO simulation up to a given time.
+    ///
+    /// This is useful in an asynchronous environment, where the client runs independently from SUMO and sends/requests
+    /// updates at unknown intervals. The client may tick at its own rate, and sync up by when needed by signalling SUMO
+    /// to tick up to the current time.
+    ///
+    /// @NOTE  This assumes SUMO's clock is synchronized with the client's (or in any case, with the time passed as
+    ///        parameter).
+    ///
+    /// @NOTE  SUMO does _not_ tick once to reach the specified simulation time, but rather the appropriate amount of
+    ///        times based on the `--step-length` option.
+    ///
+    /// @PARAM[in]      time  The time up to which SUMO should simulate (or "sync up to").
+    ///
+    /// @DEBUG
+    /// `DEBUG_DATA` - Simulation tick.
+    ///
+    void tick(const double);
 
     ///
     /// @BRIEF  Subscribes to an entity's data feed.
