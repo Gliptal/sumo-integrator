@@ -10,7 +10,7 @@
 namespace SumoIntegrator {
 
 Sumo::Connection::Connection(TraCIAPI& api)
-    : api(api) {
+    : Concern(api) {
 }
 
 Sumo::Connection::~Connection() {

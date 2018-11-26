@@ -122,7 +122,7 @@ docs-html:
 
 library: $(DIR_BIN)/lib$(LIB_NAME).a
 
-$(DIR_BIN)/lib$(LIB_NAME).a: $(DIR_BUILD)/Sumo.o $(DIR_BUILD)/Connection.o
+$(DIR_BIN)/lib$(LIB_NAME).a: $(DIR_BUILD)/Sumo.o $(DIR_BUILD)/Concern.o $(DIR_BUILD)/Connection.o $(DIR_BUILD)/Ego.o
 	@$(call print-pack,"$^ in $@")
 	@$(LIB) $(LIB_FLAGS) $@ $^
 

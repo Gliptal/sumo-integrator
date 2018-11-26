@@ -25,6 +25,7 @@ namespace SumoIntegrator {
 /// @NOTE  Major changes are to be expected.
 ///
 class Sumo : private TraCIAPI {
+    class Concern;
     class Connection;
     class Ego;
 

@@ -2,6 +2,7 @@
 #define INCLUDE_SUMOINTEGRATOR_CONNECTION_H
 
 
+#include "include/sumo-integrator/Concern.h"
 #include "include/sumo-integrator/Sumo.h"
 
 #include <string>
@@ -23,7 +24,7 @@ namespace SumoIntegrator {
 ///
 /// @NOTE  May only be accessed as a nested class of `SumoIntegrator::Sumo`.
 ///
-class Sumo::Connection {
+class Sumo::Connection : Sumo::Concern {
 public:
     Connection(TraCIAPI&);
     ~Connection();
@@ -164,8 +165,6 @@ private:
         void set(const std::string& ip, const uint port);
         void set(const std::string& address);
     } sumoAddress;
-
-    TraCIAPI& api;
 
     bool isConnected = false;
 
