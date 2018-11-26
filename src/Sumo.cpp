@@ -46,8 +46,4 @@ libsumo::TraCIResults Sumo::get_datafeed(TraCIAPI::TraCIScopeWrapper& entity, co
     return datafeed;
 }
 
-void Sumo::move_ego(const std::string& id, const Position& position) {
-    vehicle.moveToXY(id, "", 0, position.x, position.y, -1073741824, 2);
-}
-
 }  // namespace SumoIntegrator

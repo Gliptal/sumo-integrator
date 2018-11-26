@@ -42,7 +42,7 @@ void Sumo::Connection::close() {
     else {
         LOG_INFO_FAIL("not connected");
 
-        throw tcpip::SocketException("");
+        throw tcpip::SocketException("not connected");
     }
 }
 
@@ -96,7 +96,7 @@ void Sumo::Connection::connect(const std::string& ip, const uint port) {
     catch (tcpip::SocketException except) {
         LOG_INFO_FAIL("connecting to %s:%d", ip.c_str(), port);
 
-        throw;
+        throw tcpip::SocketException(ip + ":" + std::to_string(port) + " unreachable");
     }
 }
 

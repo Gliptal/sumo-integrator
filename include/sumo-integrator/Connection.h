@@ -24,7 +24,7 @@ namespace SumoIntegrator {
 ///
 /// @NOTE  May only be accessed as a nested class of `SumoIntegrator::Sumo`.
 ///
-class Sumo::Connection : Sumo::Concern {
+class Sumo::Connection : private Sumo::Concern {
 public:
     Connection(TraCIAPI&);
     ~Connection();
@@ -84,7 +84,9 @@ public:
     void open(const std::string&, const uint);
 
     ///
-    /// @BRIEF  Close the connection to SUMO's server instance, provided one exists.
+    /// @BRIEF  Close the connection to SUMO's server instance.
+    ///
+    /// @THROWS  tcpip::SocketException  If the connection does not exist.
     ///
     /// @DEBUG
     /// `DEBUG_INFO` - Closing the connection.
@@ -109,8 +111,9 @@ public:
     std::string get_ip();
 
     ///
-    /// @BRIEF  Get the port set for SUMO's server instance. If not explicitly set with `set_port()` or `set_address()`,
-    /// it defaults to 6666.
+    /// @BRIEF  Get the port set for SUMO's server instance.
+    ///
+    /// If not explicitly set with `set_port()` or `set_address()`, it defaults to 6666.
     ///
     /// @RETURN  The currently set port.
     ///

@@ -3,6 +3,7 @@
 #include "test/StaticDriver.h"
 
 #include <include/sumo-integrator/Connection.h>
+#include <include/sumo-integrator/Ego.h>
 #include <include/sumo-integrator/Sumo.h>
 #include <lib/sumo/libsumo.h>
 
@@ -31,7 +32,7 @@ int main() {
         double time = 0;
         while (time <= Settings::Simulation::END_TIME) {
             ego.tick();
-            sumo.move_ego(Settings::Ego::ID, ego.get_position());
+            sumo.ego->move(Settings::Ego::ID, ego.get_position());
             sumo.tick(time);
 
             {

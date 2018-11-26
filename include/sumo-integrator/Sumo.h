@@ -120,17 +120,6 @@ public:
     /// @TODO Catch exception.
     ///
     libsumo::TraCIResults get_datafeed(TraCIAPI::TraCIScopeWrapper&, const std::string&);
-
-    ///
-    /// @BRIEF  Position an ego vehicle.
-    ///
-    /// SUMO is capable of interacting with an ego vehicle moved in real time by an external source. The ego vehicle is
-    /// precisely placed in the give coordinates, and no interpolation/extrapolation is made on its state vectors.
-    ///
-    /// @PARAM[in]      id        The `id` of the ego vehicle.
-    /// @PARAM[in]      position  The target `3D` position.
-    ///
-    void move_ego(const std::string&, const Position&);
 };
 
 }  // namespace SumoIntegrator

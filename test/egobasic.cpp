@@ -3,6 +3,7 @@
 #include "test/StaticDriver.h"
 
 #include <include/sumo-integrator/Connection.h>
+#include <include/sumo-integrator/Ego.h>
 #include <include/sumo-integrator/Sumo.h>
 #include <lib/sumo/libsumo.h>
 
@@ -20,6 +21,7 @@ int main() {
 
         Sumo sumo;
         sumo.connection->open(Settings::Network::IP, Settings::Network::PORT);
+        sumo.ego->set_id(Settings::Ego::ID);
 
         std::cout << "\n";
 
@@ -27,13 +29,13 @@ int main() {
         for (uint step = 0; step < steps; step++) {
             ego.vary_speed(0.001, Settings::Ego::MIN_SPEED, Settings::Ego::MAX_SPEED, 3.0);
 
+            ego.tick();
+            sumo.ego->move(ego.get_position());
+            sumo.tick();
+
             std::cout << "\x1b[A\r" << std::flush;
             printf("v = %5.2f (m/s)", ego.get_speed());
             std::cout << "\n";
-
-            ego.tick();
-            sumo.move_ego(Settings::Ego::ID, ego.get_position());
-            sumo.tick();
         }
 
         sumo.connection->close();
