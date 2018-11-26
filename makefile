@@ -2,7 +2,7 @@
 ## GENERAL
 ##
 
-LIB_NAME = integrator
+LIB_NAME = sumointegrator
 GIT_REPO = https://raw.githubusercontent.com/Gliptal/sumo-integrator/master
 
 
@@ -122,7 +122,7 @@ docs-html:
 
 library: $(DIR_BIN)/lib$(LIB_NAME).a
 
-$(DIR_BIN)/lib$(LIB_NAME).a: $(DIR_BUILD)/Sumo.o
+$(DIR_BIN)/lib$(LIB_NAME).a: $(DIR_BUILD)/Sumo.o $(DIR_BUILD)/Connection.o
 	@$(call print-pack,"$^ in $@")
 	@$(LIB) $(LIB_FLAGS) $@ $^
 

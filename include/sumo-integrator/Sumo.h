@@ -1,5 +1,5 @@
-#ifndef INCLUDE_INTEGRATOR_SUMO_H
-#define INCLUDE_INTEGRATOR_SUMO_H
+#ifndef INCLUDE_SUMOINTEGRATOR_SUMO_H
+#define INCLUDE_SUMOINTEGRATOR_SUMO_H
 
 
 #include <lib/sumo/libsumo.h>
@@ -8,24 +8,29 @@
 #include <vector>
 
 
-namespace Integrator {
+namespace SumoIntegrator {
 
 ///
 /// @AUTHOR            Mattia Affabris - mattia.affabris@antemotion.com
 /// @DATE              2018-11-14
-/// @VERSION           0.2.0
-/// @VERSION           4
+/// @VERSION           0.3.0
+/// @VERSION           5
 /// @COPYRIGHT         Copyright (C) (2018) AnteMotion
 ///
-/// @BRIEF  Wraps common TraCIAPI functions.
+/// @BRIEF  Wraps the TraCIAPI library.
 ///
 /// Provides high-level, generic functionality to use SUMO's C++ TraCIAPI library. All TraCIAPI methods are wrapped into
 /// an organic and consistent interface, based on integration development requirements.
 ///
 /// @NOTE  Major changes are to be expected.
 ///
-class Sumo : public TraCIAPI {
+class Sumo : private TraCIAPI {
+    class Connection;
+    class Ego;
+
 public:
+    using TraCIAPI::vehicle;
+
     ///
     /// @BRIEF  Construct a new Sumo object.
     ///
@@ -36,32 +41,11 @@ public:
     ///
     ~Sumo();
 
-    ///
-    /// @BRIEF  Connects to a SUMO server instance.
-    ///
-    /// The instance may be running on a different machine/OS, but must be reachable through WAN or LAN.
-    ///
-    /// @PARAM[in]      ip    `IP` of the machine hosting the SUMO instance, in "standard" `IPv4` format (`x.x.x.x`).
-    /// @PARAM[in]      port  Port number of the SUMO server process running on the hosting machine (SUMO's
-    ///                       `--remote-port` option).
-    ///
-    /// @THROWS         tcpip::SocketException  If a connection could not be established.
-    ///
-    /// @DEBUG
-    /// `DEBUG_INFO` - Attempt at opening the connection.
-    ///
-    void connect(const std::string&, const uint);
+    std::unique_ptr<Connection> connection;
+    std::unique_ptr<Ego> ego;
 
     ///
-    /// @BRIEF  Closes the connection to SUMO's server instance.
-    ///
-    /// @DEBUG
-    /// `DEBUG_INFO` - Closing the connection.
-    ///
-    void close();
-
-    ///
-    /// @BRIEF  Runs one step of SUMO's simulation.
+    /// @BRIEF  Run one step of SUMO's simulation.
     ///
     /// The length of time simulated depends on the value passed to SUMO through the `--step-length` option.
     ///
@@ -73,7 +57,7 @@ public:
     void tick();
 
     ///
-    /// @BRIEF  Runs the SUMO simulation up to a given time.
+    /// @BRIEF  Run the SUMO simulation up to a given time.
     ///
     /// This is useful in an asynchronous environment, where the client runs independently from SUMO and sends/requests
     /// updates at unknown intervals. The client may tick at its own rate, and sync up by when needed by signalling SUMO
@@ -93,7 +77,7 @@ public:
     void tick(const double);
 
     ///
-    /// @BRIEF  Subscribes to an entity's data feed.
+    /// @BRIEF  Subscribe to an entity's data feed.
     ///
     /// Once subscribed to an entity's data feed, on each SUMO simulation tick SUMO makes that data available through
     /// the `get_datafeed()` method.
@@ -113,6 +97,8 @@ public:
     /// @DEBUG
     /// `DEBUG_INFO` - Subscription target.
     ///
+    /// @TODO Catch exception.
+    ///
     void subscribe(TraCIAPI::TraCIScopeWrapper&, const std::string&, const std::vector<int>&, const double, const double);
 
     ///
@@ -130,6 +116,8 @@ public:
     /// @DEBUG
     /// `DEBUG_DATA` - Amount of data received from the subscription.
     ///
+    /// @TODO Catch exception.
+    ///
     libsumo::TraCIResults get_datafeed(TraCIAPI::TraCIScopeWrapper&, const std::string&);
 
     ///
@@ -144,7 +132,7 @@ public:
     void move_ego(const std::string&, const Position&);
 };
 
-}  // namespace Integrator
+}  // namespace SumoIntegrator
 
 
-#endif  // INCLUDE_INTEGRATOR_SUMO_H
+#endif  // INCLUDE_SUMOINTEGRATOR_SUMO_H

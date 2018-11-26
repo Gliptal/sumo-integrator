@@ -1,39 +1,23 @@
-#include "include/Integrator/Sumo.h"
-#include "include/Integrator/debug.h"
+#include "include/sumo-integrator/Sumo.h"
+
+#include "include/sumo-integrator/Connection.h"
+#include "include/sumo-integrator/Ego.h"
+#include "include/sumo-integrator/debug.h"
 
 #include <lib/sumo/libsumo.h>
 
-#include <iomanip>
-#include <iostream>
 #include <string>
 #include <vector>
 
 
-namespace Integrator {
+namespace SumoIntegrator {
 
 Sumo::Sumo() {
+    connection = std::unique_ptr<Connection>(new Connection(*this));
+    ego        = std::unique_ptr<Ego>(new Ego(*this));
 }
 
 Sumo::~Sumo() {
-}
-
-void Sumo::connect(const std::string& ip, const uint port) {
-    try {
-        TraCIAPI::connect(ip, port);
-
-        LOG_INFO_SUCCESS("connected to %s:%d", ip.c_str(), port);
-    }
-    catch (tcpip::SocketException except) {
-        LOG_INFO_FAIL("connecting to %s:%d", ip.c_str(), port);
-
-        throw;
-    }
-}
-
-void Sumo::close() {
-    TraCIAPI::close();
-
-    LOG_INFO_SUCCESS("connection closed");
 }
 
 void Sumo::tick() {
@@ -66,4 +50,4 @@ void Sumo::move_ego(const std::string& id, const Position& position) {
     vehicle.moveToXY(id, "", 0, position.x, position.y, -1073741824, 2);
 }
 
-}  // namespace Integrator
+}  // namespace SumoIntegrator

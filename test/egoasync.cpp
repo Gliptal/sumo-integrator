@@ -2,7 +2,8 @@
 
 #include "test/StaticDriver.h"
 
-#include <include/Integrator/Sumo.h>
+#include <include/sumo-integrator/Connection.h>
+#include <include/sumo-integrator/Sumo.h>
 #include <lib/sumo/libsumo.h>
 
 #include <ctime>
@@ -11,7 +12,7 @@
 #define NANO_SEC 1000000000L
 
 
-using namespace Integrator;
+using namespace SumoIntegrator;
 using namespace Test;
 
 
@@ -23,7 +24,7 @@ int main() {
         ego.set_speed(Settings::Ego::MAX_SPEED / 2);
 
         Sumo sumo;
-        sumo.connect(Settings::Network::IP, Settings::Network::PORT);
+        sumo.connection->open(Settings::Network::IP, Settings::Network::PORT);
 
         std::cout << "\n";
 
@@ -50,11 +51,11 @@ int main() {
             }
 
             std::cout << "\x1b[A\r" << std::flush;
-            printf("v = %5.2f (s)", time);
+            printf("t = %5.2f (s)", time);
             std::cout << "\n";
         }
 
-        sumo.close();
+        sumo.connection->close();
 
         return 0;
     }

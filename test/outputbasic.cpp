@@ -1,6 +1,7 @@
 #include "config/test/outputbasic.h"
 
-#include <include/Integrator/Sumo.h>
+#include <include/sumo-integrator/Connection.h>
+#include <include/sumo-integrator/Sumo.h>
 #include <lib/sumo/libsumo.h>
 
 #include <iomanip>
@@ -8,13 +9,13 @@
 #include <vector>
 
 
-using namespace Integrator;
+using namespace SumoIntegrator;
 
 
 int main() {
     try {
         Sumo sumo;
-        sumo.connect(Settings::Network::IP, Settings::Network::PORT);
+        sumo.connection->open(Settings::Network::IP, Settings::Network::PORT);
 
         uint steps = Settings::Simulation::END_TIME / Settings::Simulation::TICKRATE;
         for (uint step = 0; step < steps; step++) {
@@ -43,7 +44,7 @@ int main() {
             }
         }
 
-        sumo.close();
+        sumo.connection->close();
 
         return 0;
     }

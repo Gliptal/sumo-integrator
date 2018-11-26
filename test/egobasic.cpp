@@ -2,11 +2,12 @@
 
 #include "test/StaticDriver.h"
 
-#include <include/Integrator/Sumo.h>
+#include <include/sumo-integrator/Connection.h>
+#include <include/sumo-integrator/Sumo.h>
 #include <lib/sumo/libsumo.h>
 
 
-using namespace Integrator;
+using namespace SumoIntegrator;
 using namespace Test;
 
 
@@ -18,7 +19,7 @@ int main() {
         ego.set_speed(Settings::Ego::MAX_SPEED / 2);
 
         Sumo sumo;
-        sumo.connect(Settings::Network::IP, Settings::Network::PORT);
+        sumo.connection->open(Settings::Network::IP, Settings::Network::PORT);
 
         std::cout << "\n";
 
@@ -35,7 +36,7 @@ int main() {
             sumo.tick();
         }
 
-        sumo.close();
+        sumo.connection->close();
 
         return 0;
     }
