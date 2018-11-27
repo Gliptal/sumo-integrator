@@ -1,7 +1,5 @@
 #include "test/Driver.h"
 
-#include <lib/sumo/libsumo.h>
-
 
 namespace Test {
 

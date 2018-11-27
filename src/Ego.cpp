@@ -19,7 +19,7 @@ Sumo::Ego::~Ego() {
 
 void Sumo::Ego::move(const Position& position) {
     if (id.empty())
-        throw std::runtime_error("id not set");
+        throw libsumo::TraCIException("id not set");
 
     move(id, position);
 }

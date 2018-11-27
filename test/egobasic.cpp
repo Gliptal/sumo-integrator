@@ -2,9 +2,7 @@
 
 #include "test/StaticDriver.h"
 
-#include <include/sumo-integrator/Connection.h>
-#include <include/sumo-integrator/Ego.h>
-#include <include/sumo-integrator/Sumo.h>
+#include <include/sumo-integrator/libsumointegrator.h>
 #include <lib/sumo/libsumo.h>
 
 
@@ -31,7 +29,7 @@ int main() {
 
             ego.tick();
             sumo.ego->move(ego.get_position());
-            sumo.tick();
+            sumo.simulation->tick();
 
             std::cout << "\x1b[A\r" << std::flush;
             printf("v = %5.2f (m/s)", ego.get_speed());

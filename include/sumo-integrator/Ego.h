@@ -39,7 +39,7 @@ public:
     ///
     /// @PARAM[in]      position  The target `3D` position.
     ///
-    /// @THROWS  tcpip::SocketException  If the `id` is not set.
+    /// @THROWS  libsumo::TraCIException  If the `id` is not set.
     ///
     /// @SEE `move(const std::string&, const Position&)`
     ///
@@ -68,7 +68,7 @@ public:
     ///
     /// @BRIEF  Set the `id` of the ego entity.
     ///
-    /// @PARAM[in]      id        The `id` of the ego entity.
+    /// @PARAM[in]      id  The `id` of the ego entity.
     ///
     void set_id(const std::string&);
 

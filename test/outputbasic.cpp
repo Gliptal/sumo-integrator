@@ -1,11 +1,8 @@
 #include "config/test/outputbasic.h"
 
-#include <include/sumo-integrator/Connection.h>
-#include <include/sumo-integrator/Sumo.h>
+#include <include/sumo-integrator/libsumointegrator.h>
 #include <lib/sumo/libsumo.h>
 
-#include <iomanip>
-#include <iostream>
 #include <vector>
 
 
@@ -21,18 +18,18 @@ int main() {
         for (uint step = 0; step < steps; step++) {
             uint spawnStep = Settings::Traffic::START_TIME / Settings::Simulation::TICKRATE;
 
-            sumo.tick();
+            sumo.simulation->tick();
 
             if (step == spawnStep) {
                 std::vector<int> request {VAR_POSITION3D, VAR_ANGLE, VAR_SPEED};
 
-                sumo.subscribe(sumo.vehicle, Settings::Traffic::ID, request, Settings::Traffic::START_TIME, Settings::Simulation::END_TIME);
+                sumo.entities->subscribe(sumo.vehicle, Settings::Traffic::ID, request, Settings::Traffic::START_TIME, Settings::Simulation::END_TIME);
 
                 std::cout << "\n";
             }
 
             if (step >= spawnStep) {
-                libsumo::TraCIResults results = sumo.get_datafeed(sumo.vehicle, Settings::Traffic::ID);
+                libsumo::TraCIResults results = sumo.entities->get_datafeed(sumo.vehicle, Settings::Traffic::ID);
 
                 Position* position = (Position*) results[VAR_POSITION3D].get();
                 double angle       = ((libsumo::TraCIDouble*) results[VAR_ANGLE].get())->value;

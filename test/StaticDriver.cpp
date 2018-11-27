@@ -1,8 +1,7 @@
 #include "test/StaticDriver.h"
 
-#include <vector>
-
 #include <cstdlib>
+#include <vector>
 
 
 namespace Test {
