@@ -1,10 +1,11 @@
-#include "test/StaticDriver.h"
+#include "test/drivers/StaticDriver.h"
 
-#include <cstdlib>
 #include <vector>
 
+#include <cstdlib>
 
-namespace Test {
+
+namespace test {
 
 StaticDriver::StaticDriver(const double tickrate)
     : Driver(tickrate) {
@@ -38,28 +39,28 @@ void StaticDriver::vary_speed(const double rate, const double min, const double 
 }
 
 void StaticDriver::tick() {
-    double spacerate = speed * tickrate;
+    double delta = speed * tickrate;
 
     // north lane
     if (position.y >= network[0][1] - 0.01) {
         position.y = network[0][1];
-        position.x += spacerate;
+        position.x += delta;
     }
     // east lane
     if (position.x >= network[1][0] - 0.01) {
         position.x = network[1][0];
-        position.y -= spacerate;
+        position.y -= delta;
     }
     // south lane
     if (position.y <= network[2][1] + 0.01) {
         position.y = network[2][1];
-        position.x -= spacerate;
+        position.x -= delta;
     }
     // west lane
     if (position.x <= network[3][0] + 0.01) {
         position.x = network[3][0];
-        position.y += spacerate;
+        position.y += delta;
     }
 }
 
-}  // namespace Test
+}  // namespace test

@@ -1,11 +1,14 @@
-#include "include/sumo-integrator/Entities.h"
+#include "include/sumo-integrator/core/Entities.h"
 
-#include "include/sumo-integrator/debug.h"
+#include "include/sumo-integrator/utils/debug.h"
 
 #include <lib/sumo/libsumo.h>
 
+#include <string>
+#include <vector>
 
-namespace SumoIntegrator {
+
+namespace sumointegrator {
 
 Sumo::Entities::Entities(TraCIAPI& api)
     : Concern(api) {
@@ -20,18 +23,18 @@ void Sumo::Entities::subscribe(TraCIAPI::TraCIScopeWrapper& entity, const std::s
     LOG_INFO_SUCCESS("subscribed to %s", id.c_str());
 }
 
-libsumo::TraCIResults Sumo::Entities::get_datafeed(TraCIAPI::TraCIScopeWrapper& entity, const std::string& id) {
-    libsumo::TraCIResults datafeed = entity.getSubscriptionResults(id);
+libsumo::TraCIResults Sumo::Entities::poll(TraCIAPI::TraCIScopeWrapper& entity, const std::string& id) {
+    libsumo::TraCIResults data = entity.getSubscriptionResults(id);
 
-    if (datafeed.empty()) {
+    if (data.empty()) {
         LOG_INFO_FAIL("entity %s not subscribed", id.c_str());
 
         throw libsumo::TraCIException("entity not subscribed");
     }
 
-    LOG_DATA("received %d data", datafeed.size());
+    LOG_DATA("received %d data", data.size());
 
-    return datafeed;
+    return data;
 }
 
-}  // namespace SumoIntegrator
+}  // namespace sumointegrator

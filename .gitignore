@@ -1,6 +1,9 @@
 .vscode
+
 bin
 build
+
 doc/doxygen/**
 !doc/doxygen/doxyfile
+
 *.lnk

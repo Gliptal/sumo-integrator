@@ -1,11 +1,11 @@
-#include "include/sumo-integrator/Simulation.h"
+#include "include/sumo-integrator/core/Simulation.h"
 
-#include "include/sumo-integrator/debug.h"
+#include "include/sumo-integrator/utils/debug.h"
 
 #include <lib/sumo/libsumo.h>
 
 
-namespace SumoIntegrator {
+namespace sumointegrator {
 
 Sumo::Simulation::Simulation(TraCIAPI& api)
     : Concern(api) {
@@ -26,4 +26,4 @@ void Sumo::Simulation::tick(const double time) {
     LOG_DATA("tick");
 }
 
-}  // namespace SumoIntegrator
+}  // namespace sumointegrator

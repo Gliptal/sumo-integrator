@@ -1,7 +1,7 @@
-#include "test/Driver.h"
+#include "test/drivers/Driver.h"
 
 
-namespace Test {
+namespace test {
 
 Driver::Driver(const double tickrate)
     : tickrate(tickrate) {
@@ -22,4 +22,4 @@ void Driver::set_speed(const double speed) {
     this->speed = speed;
 }
 
-}  // namespace Test
+}  // namespace test

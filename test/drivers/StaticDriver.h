@@ -1,13 +1,11 @@
-#ifndef TEST_STATICDRIVER_H
-#define TEST_STATICDRIVER_H
+#ifndef TEST_DRIVERS_STATICDRIVER_H
+#define TEST_DRIVERS_STATICDRIVER_H
 
 
-#include "test/Driver.h"
-
-#include <lib/sumo/libsumo.h>
+#include "test/drivers/Driver.h"
 
 
-namespace Test {
+namespace test {
 
 class StaticDriver : public Driver {
 public:
@@ -20,7 +18,7 @@ public:
     void tick();
 };
 
-}  // namespace Test
+}  // namespace test
 
 
-#endif  // TEST_STATICDRIVER_H
+#endif  // TEST_DRIVERS_STATICDRIVER_H

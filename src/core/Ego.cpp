@@ -1,14 +1,13 @@
-#include "include/sumo-integrator/Ego.h"
+#include "include/sumo-integrator/core/Ego.h"
 
-#include "include/sumo-integrator/debug.h"
+#include "include/sumo-integrator/utils/debug.h"
 
 #include <lib/sumo/libsumo.h>
 
-#include <stdexcept>
 #include <string>
 
 
-namespace SumoIntegrator {
+namespace sumointegrator {
 
 Sumo::Ego::Ego(TraCIAPI& api)
     : Concern(api) {
@@ -36,4 +35,4 @@ void Sumo::Ego::set_id(const std::string& id) {
     this->id = id;
 }
 
-}  // namespace SumoIntegrator
+}  // namespace sumointegrator

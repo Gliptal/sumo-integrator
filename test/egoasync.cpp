@@ -1,8 +1,8 @@
 #include "config/test/egoasync.h"
 
-#include "test/StaticDriver.h"
+#include "test/drivers/StaticDriver.h"
 
-#include <include/sumo-integrator/libsumointegrator.h>
+#include <include/sumo-integrator/master.h>
 #include <lib/sumo/libsumo.h>
 
 #include <ctime>
@@ -11,8 +11,8 @@
 #define NANO_SEC 1000000000L
 
 
-using namespace SumoIntegrator;
-using namespace Test;
+using namespace sumointegrator;
+using namespace test;
 
 
 int main() {
@@ -24,13 +24,14 @@ int main() {
 
         Sumo sumo;
         sumo.connection->open(Settings::Network::IP, Settings::Network::PORT);
+        sumo.ego->set_id(Settings::Ego::ID);
 
         std::cout << "\n";
 
         double time = 0;
         while (time <= Settings::Simulation::END_TIME) {
             ego.tick();
-            sumo.ego->move(Settings::Ego::ID, ego.get_position());
+            sumo.ego->move(ego.get_position());
             sumo.simulation->tick(time);
 
             {

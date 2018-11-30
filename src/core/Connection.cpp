@@ -1,13 +1,13 @@
-#include "include/sumo-integrator/Connection.h"
+#include "include/sumo-integrator/core/Connection.h"
 
-#include "include/sumo-integrator/debug.h"
+#include "include/sumo-integrator/utils/debug.h"
 
 #include <lib/sumo/libsumo.h>
 
 #include <string>
 
 
-namespace SumoIntegrator {
+namespace sumointegrator {
 
 Sumo::Connection::Connection(TraCIAPI& api)
     : Concern(api) {
@@ -17,19 +17,19 @@ Sumo::Connection::~Connection() {
 }
 
 void Sumo::Connection::open() {
-    connect(sumoAddress.ip, sumoAddress.port);
+    connect(server.ip, server.port);
 }
 
 void Sumo::Connection::open(const std::string& address) {
     set_address(address);
 
-    connect(sumoAddress.ip, sumoAddress.port);
+    connect(server.ip, server.port);
 }
 
 void Sumo::Connection::open(const std::string& ip, const uint port) {
     set_address(ip, port);
 
-    connect(sumoAddress.ip, sumoAddress.port);
+    connect(server.ip, server.port);
 }
 
 void Sumo::Connection::close() {
@@ -51,27 +51,27 @@ bool Sumo::Connection::status() {
 }
 
 std::string Sumo::Connection::get_ip() {
-    return sumoAddress.ip;
+    return server.ip;
 }
 
 uint Sumo::Connection::get_port() {
-    return sumoAddress.port;
+    return server.port;
 }
 
 void Sumo::Connection::set_address(const std::string& address) {
-    sumoAddress.set(address);
+    server.set(address);
 }
 
 void Sumo::Connection::set_address(const std::string& ip, const uint port) {
-    sumoAddress.set(ip, port);
+    server.set(ip, port);
 }
 
 void Sumo::Connection::set_ip(const std::string& ip) {
-    sumoAddress.ip = ip;
+    server.ip = ip;
 }
 
 void Sumo::Connection::set_port(const uint port) {
-    sumoAddress.port = port;
+    server.port = port;
 }
 
 void Sumo::Connection::address_t::set(const std::string& address) {
@@ -100,4 +100,4 @@ void Sumo::Connection::connect(const std::string& ip, const uint port) {
     }
 }
 
-}  // namespace SumoIntegrator
+}  // namespace sumointegrator

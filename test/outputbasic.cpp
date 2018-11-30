@@ -1,12 +1,12 @@
 #include "config/test/outputbasic.h"
 
-#include <include/sumo-integrator/libsumointegrator.h>
+#include <include/sumo-integrator/master.h>
 #include <lib/sumo/libsumo.h>
 
 #include <vector>
 
 
-using namespace SumoIntegrator;
+using namespace sumointegrator;
 
 
 int main() {
@@ -29,7 +29,7 @@ int main() {
             }
 
             if (step >= spawnStep) {
-                libsumo::TraCIResults results = sumo.entities->get_datafeed(sumo.vehicle, Settings::Traffic::ID);
+                libsumo::TraCIResults results = sumo.entities->poll(sumo.vehicle, Settings::Traffic::ID);
 
                 Position* position = (Position*) results[VAR_POSITION3D].get();
                 double angle       = ((libsumo::TraCIDouble*) results[VAR_ANGLE].get())->value;

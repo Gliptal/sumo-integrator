@@ -36,8 +36,8 @@ Entities SHOULD be ordered as:
 - `const`(s)
 - `enum`(s)
 - `struct`(s)
-- field (s)
-- method (s)
+- field(s)
+- method(s)
 
 ## CODE FORMATTING
 
@@ -47,7 +47,9 @@ See the [.clang-format](../.clang-format) file.
 
 MUST be placed in every header.
 
-MUST be formatted as `<PATH>_<FILENAME>_<EXTENSION>_`.
+MUST use the `#ifndef` `#define` `#endif` paradigm; MUST NOT use the `#pragma` directive.
+
+MUST be formatted as `<PATH>_<FILENAME>_<EXTENSION>`.
 
 ## INCLUDES
 
@@ -70,7 +72,7 @@ MUST be 4 spaces.
 
 |             |            |
 |-------------|------------|
-| `namespace` | PascalCase |
+| `namespace` | lowercase  |
 | `class`     | PascalCase |
 | `struct`    | PascalCase |
 | `#define`   | UPPER_CASE |

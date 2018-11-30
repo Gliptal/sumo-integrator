@@ -1,9 +1,9 @@
-#include "include/sumo-integrator/Concern.h"
+#include "include/sumo-integrator/core/Concern.h"
 
 #include <lib/sumo/libsumo.h>
 
 
-namespace SumoIntegrator {
+namespace sumointegrator {
 
 Sumo::Concern::Concern(TraCIAPI& api)
     : api(api) {
@@ -12,4 +12,4 @@ Sumo::Concern::Concern(TraCIAPI& api)
 Sumo::Concern::~Concern() {
 }
 
-}  // namespace SumoIntegrator
+}  // namespace sumointegrator

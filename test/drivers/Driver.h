@@ -1,5 +1,5 @@
-#ifndef TEST_DRIVER_H
-#define TEST_DRIVER_H
+#ifndef TEST_DRIVERS_DRIVER_H
+#define TEST_DRIVERS_DRIVER_H
 
 
 #include <lib/sumo/libsumo.h>
@@ -8,7 +8,7 @@
 #include <vector>
 
 
-namespace Test {
+namespace test {
 
 class Driver {
     typedef std::vector<std::array<double, 3>> Network;
@@ -33,7 +33,7 @@ protected:
     virtual void tick()                                              = 0;
 };
 
-}  // namespace Test
+}  // namespace test
 
 
-#endif  // TEST_DRIVER_H
+#endif  // TEST_DRIVERS_DRIVER_H

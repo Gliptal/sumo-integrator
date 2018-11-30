@@ -1,13 +1,13 @@
 #include "config/test/egobasic.h"
 
-#include "test/StaticDriver.h"
+#include "test/drivers/StaticDriver.h"
 
-#include <include/sumo-integrator/libsumointegrator.h>
+#include <include/sumo-integrator/master.h>
 #include <lib/sumo/libsumo.h>
 
 
-using namespace SumoIntegrator;
-using namespace Test;
+using namespace sumointegrator;
+using namespace test;
 
 
 int main() {

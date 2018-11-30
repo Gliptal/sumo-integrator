@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 0.3.0-alpha3+201811301124 | _2018-11-30_
+#### ADDED
+- `make tests` target
+- `make docs` target
+- `make library-core` target
+- library domain subclassing
+
+#### CHANGED
+- folder substructure
+- `makefile` overhaul
+
 ## 0.2.0-alpha2+201811221502 | _2018-11-22_
 #### ADDED
 - `make reset` target
