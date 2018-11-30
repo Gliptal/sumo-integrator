@@ -112,7 +112,7 @@ filter-libs = $(filter-out $(DIR_LIB)/sumo/%.h,$1)
 ## OPTIONS
 ##
 
-.PHONY: help all reset clean clean-all clean-docs docs docs-html library library-core tests test-output-basic test-ego-basic test-ego-async
+.PHONY: help all reset clean clean-all clean-docs docs docs-html library library-core tests test-output-basic test-output-sets test-ego-basic test-ego-async
 
 
 ##
@@ -136,6 +136,7 @@ help:
 	@$(call print-title,"TESTS")
 	@$(call print-help,"tests","builds all the tests")
 	@$(call print-help,"test-output-basic","builds the output-basic test")
+	@$(call print-help,"test-output-sets","builds the output-sets test")
 	@$(call print-help,"test-ego-basic","builds the ego-basic test")
 	@$(call print-help,"test-ego-async","builds the ego-async test")
 
@@ -192,15 +193,21 @@ $(DIR_BUILD)/library/core/%.o: $(DIR_SRC)/core/%.cpp
 ## TESTS
 ##
 
-tests: test-output-basic test-ego-basic test-ego-async
+tests: test-output-basic test-output-sets test-ego-basic test-ego-async
 
 test-output-basic: $(DIR_BIN)/outputbasic.out
+
+test-output-sets: $(DIR_BIN)/outputsets.out
 
 test-ego-basic: $(DIR_BIN)/egobasic.out
 
 test-ego-async: $(DIR_BIN)/egoasync.out
 
 $(DIR_BIN)/outputbasic.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/outputbasic.o
+	@$(call print-link,"$@",$^,$?)
+	@$(CPP) -o $@ $^ $(CPP_LIBS)
+
+$(DIR_BIN)/outputsets.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/outputsets.o
 	@$(call print-link,"$@",$^,$?)
 	@$(CPP) -o $@ $^ $(CPP_LIBS)
 
