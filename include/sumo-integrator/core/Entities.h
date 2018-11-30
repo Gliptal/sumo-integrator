@@ -16,7 +16,7 @@ namespace sumointegrator {
 /// @DATE              2018-11-26
 /// @DATE              2018-11-29
 /// @VERSION           0.3.0-alpha3
-/// @VERSION           2
+/// @VERSION           3
 /// @COPYRIGHT         Copyright (C) (2018) AnteMotion
 ///
 /// @BRIEF  Exposes facilities related to SUMO's entities.
@@ -27,6 +27,18 @@ namespace sumointegrator {
 ///
 class Sumo::Entities : private Sumo::Concern {
 public:
+    ///
+    /// @BRIEF  Provides default datasets to be used with subscriptions.
+    ///
+    /// - `TRANSFORM`
+    /// - `VECTORS`
+    /// - `STATE`
+    ///
+    std::map<std::string, std::vector<int>> DATASETS = {
+        {"TRANSFORM", {VAR_POSITION3D, VAR_ANGLE}},
+        {"VECTORS", {VAR_SPEED, VAR_ACCELERATION}},
+        {"STATE", {VAR_SIGNALS, VAR_STOPSTATE}}};
+
     Entities(TraCIAPI&);
     ~Entities();
 

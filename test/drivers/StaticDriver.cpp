@@ -1,7 +1,5 @@
 #include "test/drivers/StaticDriver.h"
 
-#include <vector>
-
 #include <cstdlib>
 
 
