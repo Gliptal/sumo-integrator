@@ -1,6 +1,6 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = sumo-integrator
-PROJECT_NUMBER         = 0.3.0-alpha3+201811301124
+PROJECT_NUMBER         = 0.3.1-alpha3+201812031352
 PROJECT_BRIEF          = "sumo-integrator is a C++ static library that provides abstract integration tools geared towards connecting SUMO with a (any) graphic engine(s)."
 PROJECT_LOGO           = ./icon.png
 OUTPUT_DIRECTORY       =

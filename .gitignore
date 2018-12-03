@@ -7,3 +7,4 @@ doc/doxygen/**
 !doc/doxygen/doxyfile
 
 *.lnk
+*.sh

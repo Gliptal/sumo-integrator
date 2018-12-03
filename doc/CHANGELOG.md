@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.1-alpha3+201812031352 | _2018-12-03_
+#### FIXED
+- missing documentation
+
 ## 0.3.0-alpha3+201811301124 | _2018-11-30_
 #### ADDED
 - `make tests` target

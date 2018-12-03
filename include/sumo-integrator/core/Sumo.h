@@ -11,7 +11,7 @@ namespace sumointegrator {
 /// @AUTHOR            Mattia Affabris - mattia.affabris@antemotion.com
 /// @DATE              2018-11-14
 /// @DATE              2018-11-29
-/// @VERSION           0.3.0-alpha3
+/// @VERSION           0.3.1-alpha3
 /// @VERSION           6
 /// @COPYRIGHT         Copyright (C) (2018) AnteMotion
 ///
