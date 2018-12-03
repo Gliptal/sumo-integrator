@@ -15,7 +15,7 @@ namespace sumointegrator {
 /// @DATE              2018-11-26
 /// @DATE              2018-11-29
 /// @VERSION           0.3.1-alpha3
-/// @VERSION           2
+/// @VERSION           3
 /// @COPYRIGHT         Copyright (C) (2018) AnteMotion
 ///
 /// @BRIEF  Exposes facilities related to the ego entity.
@@ -29,6 +29,45 @@ class Sumo::Ego : private Sumo::Concern {
 public:
     Ego(TraCIAPI&);
     ~Ego();
+
+    ///
+    /// @BRIEF  Subscribe to the data feed of neighbouring vehicles.
+    ///
+    /// Data is received from only those vehicles within a circle cantered in the ego vehicle and with the given radius.
+    /// Once subscribed to a data feed, on each SUMO simulation tick that data is made available through `poll()`.
+    ///
+    /// @UNITS
+    /// `start`   seconds (s)\n
+    /// `end`     seconds (s)\n
+    /// 'radius'  meters (m)
+    ///
+    /// @PARAM[in]      request  The requested data.
+    /// @PARAM[in]      start    The time the subscription starts taking effect.
+    /// @PARAM[in]      end      The time the subscription stops taking effect.
+    /// @PARAM[in]      radius   The radius of the circle area.
+    ///
+    /// @DEBUG
+    /// `DEBUG_INFO` - Subscription target.
+    /// `DEBUG_DATA` - Number of vehicles in the radius.
+    ///
+    void subscribe(const std::vector<int>&, const double, const double, const double);
+
+    ///
+    /// @BRIEF  Poll the neighbouring vehicles data feed.
+    ///
+    /// It is assumed a subscription was previously made with `subscribe()`. The data is collected in an `std::map`
+    /// (`libsumo::TraCIResults`) and can be index-accessed for usage; the amount of datasets received depends on the
+    /// number of vehicles within the radius specified with `subscribe()`.
+    ///
+    /// @RETURN  An `std::map` of entries, the keys being the vehicles and the content being an `std::map` of entries
+    ///          with all the requested data.
+    ///
+    /// @NOTE  No failure state is returned if no subscription was previously made.
+    ///
+    /// @DEBUG
+    /// `DEBUG_DATA` - Number of datapoints received from the subscription for each vehicle.
+    ///
+    libsumo::SubscriptionResults poll();
 
     ///
     /// @BRIEF  Move an ego entity.

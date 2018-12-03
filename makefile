@@ -112,7 +112,7 @@ filter-libs = $(filter-out $(DIR_LIB)/sumo/%.h,$1)
 ## OPTIONS
 ##
 
-.PHONY: help all reset clean clean-all clean-docs docs docs-html library library-core tests test-output-basic test-output-sets test-ego-basic test-ego-async
+.PHONY: help all reset clean clean-all clean-docs docs docs-html library library-core tests test-output-basic test-output-sets test-ego-basic test-ego-async test-ego-subscribe
 
 
 ##
@@ -139,6 +139,7 @@ help:
 	@$(call print-help,"test-output-sets","builds the output-sets test")
 	@$(call print-help,"test-ego-basic","builds the ego-basic test")
 	@$(call print-help,"test-ego-async","builds the ego-async test")
+	@$(call print-help,"test-ego-subscribe","builds the ego-subscribe test")
 
 all: library tests
 
@@ -193,7 +194,7 @@ $(DIR_BUILD)/library/core/%.o: $(DIR_SRC)/core/%.cpp
 ## TESTS
 ##
 
-tests: test-output-basic test-output-sets test-ego-basic test-ego-async
+tests: test-output-basic test-output-sets test-ego-basic test-ego-async test-ego-subscribe
 
 test-output-basic: $(DIR_BIN)/outputbasic.out
 
@@ -202,6 +203,8 @@ test-output-sets: $(DIR_BIN)/outputsets.out
 test-ego-basic: $(DIR_BIN)/egobasic.out
 
 test-ego-async: $(DIR_BIN)/egoasync.out
+
+test-ego-subscribe: $(DIR_BIN)/egosubscribe.out
 
 $(DIR_BIN)/outputbasic.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/outputbasic.o
 	@$(call print-link,"$@",$^,$?)
@@ -216,6 +219,10 @@ $(DIR_BIN)/egobasic.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/egobasic.
 	@$(CPP) -o $@ $^ $(CPP_LIBS)
 
 $(DIR_BIN)/egoasync.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/egoasync.o $(DIR_BUILD)/test/drivers/Driver.o $(DIR_BUILD)/test/drivers/StaticDriver.o
+	@$(call print-link,"$@",$^,$?)
+	@$(CPP) -o $@ $^ $(CPP_LIBS)
+
+$(DIR_BIN)/egosubscribe.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/egosubscribe.o $(DIR_BUILD)/test/drivers/Driver.o $(DIR_BUILD)/test/drivers/StaticDriver.o
 	@$(call print-link,"$@",$^,$?)
 	@$(CPP) -o $@ $^ $(CPP_LIBS)
 

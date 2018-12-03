@@ -16,6 +16,20 @@ Sumo::Ego::Ego(TraCIAPI& api)
 Sumo::Ego::~Ego() {
 }
 
+void Sumo::Ego::subscribe(const std::vector<int>& request, const double radius, const double start, const double end) {
+    api.vehicle.subscribeContext(id, CMD_GET_VEHICLE_VARIABLE, radius, request, start, end);
+
+    LOG_INFO_SUCCESS("subscribed to %s's %.2f (m) context", id.c_str(), radius);
+}
+
+libsumo::SubscriptionResults Sumo::Ego::poll() {
+    libsumo::SubscriptionResults data = api.vehicle.getContextSubscriptionResults(id);
+
+    LOG_DATA("received %d data", data.size());
+
+    return data;
+}
+
 void Sumo::Ego::move(const Position& position) {
     if (id.empty())
         throw libsumo::TraCIException("id not set");

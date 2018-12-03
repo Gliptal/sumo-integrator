@@ -75,7 +75,7 @@ Files related and required by SUMO are _not_ part of this repository.
 
 **SETUP** - The network is formed by a single two-lane road looped in the shape of a rectangle (dimensioned at 100m x 200m). The SUMO vehicle (yellow car) spawns  adjacent to the North-West corner of the loop.
 
-**RUN** - SUMO must be started _before_ `outputbasic.out` with the following options:
+**RUN** - SUMO must be started _before_ `outputsets.out` with the following options:
 
 ```
 -c outputsets.sumocfg
@@ -104,11 +104,11 @@ Files related and required by SUMO are _not_ part of this repository.
 
 ### EGO-ASYNC
 
-**SCOPE** - This functionality test ensures that SUMO-driven vehicles correctly interact (e.g. avoid, overtake) with a programmatically-driven ego vehicle, when the latter's simulatin is asynchronous.
+**SCOPE** - This functionality test ensures that SUMO-driven vehicles correctly interact (e.g. avoid, overtake) with a programmatically-driven ego vehicle, when the latter's simulation is asynchronous.
 
 **SETUP** - The network is formed by a single two-lane road, looped in the shape of a rectangle (dimensioned at 100m x 200m). The ego vehicle (red car) and  the SUMO vehicles (yellow cars) spawn adjacent to the North-West corner of the loop, at different times.
 
-**RUN** - SUMO must be started _before_ `egobasic.out` with the following options:
+**RUN** - SUMO must be started _before_ `egoasync.out` with the following options:
 
 ```
 -c egoasync.sumocfg
@@ -118,6 +118,23 @@ Files related and required by SUMO are _not_ part of this repository.
 ```
 
 **RESULT** - The ego car (red) should drive the loop in the right lane; the SUMO cars (yellow) should also drive the loop, organically overtaking the ego car (and possibly each other). Some imprecisions in the curved sections of the road is to be expected.
+
+### EGO-SUBSCRIBE
+
+**SCOPE** - This functionality test ensures that ego neighbours subscriptions correctly return the appropriate amount of vehicles, based on a given radius.
+
+**SETUP** - The network is formed by a single two-lane road, looped in the shape of a rectangle (dimensioned at 100m x 200m). The ego vehicle (red car) and  the SUMO vehicles (yellow cars) spawn adjacent to the North-West corner of the loop, at different times.
+
+**RUN** - SUMO must be started _before_ `egosubscribe.out` with the following options:
+
+```
+-c egosubscribe.sumocfg
+--step-length 0.01
+--default.action-step-length 0.01
+--lateral-resolution 100
+```
+
+**RESULT** - The ego car (red) should drive the loop in the right lane at a lower speed than; the SUMO cars (yellow). As the former overtake the latter, the subscribed count should first increase and then decrease back to 0.
 
 ## CHANGELOG
 
