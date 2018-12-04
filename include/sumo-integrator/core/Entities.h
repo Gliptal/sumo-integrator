@@ -4,6 +4,7 @@
 
 #include "include/sumo-integrator/core/Concern.h"
 #include "include/sumo-integrator/core/Sumo.h"
+#include "include/sumo-integrator/types/compound.h"
 
 #include <string>
 #include <vector>
@@ -71,19 +72,19 @@ public:
     /// @BRIEF  Poll an entity's data feed.
     ///
     /// It is assumed a subscription was previously made with `subscribe()`. The data is collected in an `std::map`
-    /// (`libsumo::TraCIResults`) and can be index-accessed for usage.
+    /// (`types::Datamap`) and can be index-accessed for usage.
     ///
     /// @PARAM[in]      entity  The type of entity whose feed to poll.
     /// @PARAM[in]      id      The `id` of the entity whose feed to poll.
     ///
     /// @RETURN  An `std::map` with all the requested data.
     ///
-    /// @THROWS  libsumo::TraCIException  If no subscription was previously made.
+    /// @THROWS  types::RuntimeException  If no subscription was previously made.
     ///
     /// @DEBUG
     /// `DEBUG_DATA` - Number of datapoints received from the subscription.
     ///
-    libsumo::TraCIResults poll(TraCIAPI::TraCIScopeWrapper&, const std::string&);
+    types::Datamap poll(TraCIAPI::TraCIScopeWrapper&, const std::string&);
 };
 
 }  // namespace sumointegrator

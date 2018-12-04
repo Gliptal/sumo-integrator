@@ -1,5 +1,7 @@
 #include "include/sumo-integrator/core/Entities.h"
 
+#include "include/sumo-integrator/types/compound.h"
+#include "include/sumo-integrator/types/exception.h"
 #include "include/sumo-integrator/utils/debug.h"
 
 #include <lib/sumo/libsumo.h>
@@ -23,13 +25,13 @@ void Sumo::Entities::subscribe(TraCIAPI::TraCIScopeWrapper& entity, const std::s
     LOG_INFO_SUCCESS("subscribed to %s", id.c_str());
 }
 
-libsumo::TraCIResults Sumo::Entities::poll(TraCIAPI::TraCIScopeWrapper& entity, const std::string& id) {
-    libsumo::TraCIResults data = entity.getSubscriptionResults(id);
+types::Datamap Sumo::Entities::poll(TraCIAPI::TraCIScopeWrapper& entity, const std::string& id) {
+    types::Datamap data = entity.getSubscriptionResults(id);
 
     if (data.empty()) {
         LOG_INFO_FAIL("entity %s not subscribed", id.c_str());
 
-        throw libsumo::TraCIException("entity not subscribed");
+        throw types::RuntimeException("entity not subscribed");
     }
 
     LOG_DATA("received %d data", data.size());

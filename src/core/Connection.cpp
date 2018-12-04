@@ -1,5 +1,6 @@
 #include "include/sumo-integrator/core/Connection.h"
 
+#include "include/sumo-integrator/types/exception.h"
 #include "include/sumo-integrator/utils/debug.h"
 
 #include <lib/sumo/libsumo.h>
@@ -42,7 +43,7 @@ void Sumo::Connection::close() {
     else {
         LOG_INFO_FAIL("not connected");
 
-        throw tcpip::SocketException("not connected");
+        throw types::ConnectionException("not connected");
     }
 }
 
@@ -93,10 +94,10 @@ void Sumo::Connection::connect(const std::string& ip, const uint port) {
 
         LOG_INFO_SUCCESS("connected to %s:%d", ip.c_str(), port);
     }
-    catch (tcpip::SocketException except) {
+    catch (types::ConnectionException except) {
         LOG_INFO_FAIL("connecting to %s:%d", ip.c_str(), port);
 
-        throw tcpip::SocketException(ip + ":" + std::to_string(port) + " unreachable");
+        throw types::ConnectionException(ip + ":" + std::to_string(port) + " unreachable");
     }
 }
 

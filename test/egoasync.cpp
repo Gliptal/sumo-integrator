@@ -3,7 +3,6 @@
 #include "test/drivers/StaticDriver.h"
 
 #include <include/sumo-integrator/master.h>
-#include <lib/sumo/libsumo.h>
 
 #include <ctime>
 

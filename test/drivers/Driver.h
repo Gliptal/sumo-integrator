@@ -2,7 +2,7 @@
 #define TEST_DRIVERS_DRIVER_H
 
 
-#include <lib/sumo/libsumo.h>
+#include <include/sumo-integrator/types/compound.h>
 
 #include <array>
 #include <vector>
@@ -16,14 +16,14 @@ class Driver {
 public:
     virtual ~Driver();
 
-    Position get_position();
+    sumointegrator::types::Position get_position();
     double get_speed();
     void set_speed(const double);
 
 protected:
     double tickrate;
     Network network;
-    Position position;
+    sumointegrator::types::Position position;
     double speed;
 
     Driver(const double);

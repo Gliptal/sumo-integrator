@@ -1,5 +1,7 @@
 #include "test/drivers/Driver.h"
 
+#include <include/sumo-integrator/types/compound.h>
+
 
 namespace test {
 
@@ -10,7 +12,7 @@ Driver::Driver(const double tickrate)
 Driver::~Driver() {
 }
 
-Position Driver::get_position() {
+sumointegrator::types::Position Driver::get_position() {
     return position;
 }
 

@@ -1,7 +1,6 @@
 #include "config/test/outputbasic.h"
 
 #include <include/sumo-integrator/master.h>
-#include <lib/sumo/libsumo.h>
 
 #include <vector>
 
@@ -29,11 +28,11 @@ int main() {
             }
 
             if (step >= spawnStep) {
-                libsumo::TraCIResults results = sumo.entities->poll(sumo.vehicle, Settings::Traffic::ID);
+                types::Datamap results = sumo.entities->poll(sumo.vehicle, Settings::Traffic::ID);
 
-                Position* position = (Position*) results[VAR_POSITION3D].get();
-                double angle       = ((libsumo::TraCIDouble*) results[VAR_ANGLE].get())->value;
-                double speed       = ((libsumo::TraCIDouble*) results[VAR_SPEED].get())->value;
+                types::Position* position = (types::Position*) results[VAR_POSITION3D].get();
+                double angle              = types::cast_double(results[VAR_ANGLE]);
+                double speed              = types::cast_double(results[VAR_SPEED]);
 
                 std::cout << "\x1b[A\r" << std::flush;
                 printf("x = %6.2f (m), y = %6.2f (m), z = %.2f (m) | a = %6.2f (deg) | v = %5.2f (m/s)", position->x, position->y, position->z, angle, speed);

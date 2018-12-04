@@ -6,6 +6,8 @@
 #include "include/sumo-integrator/core/Simulation.h"
 #include "include/sumo-integrator/utils/debug.h"
 
+#include <memory>
+
 
 namespace sumointegrator {
 

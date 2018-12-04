@@ -39,7 +39,7 @@ public:
     /// LAN. If IP and port were not previously set with the `set_address()`, or `set_ip()` and `set_port()`, the
     /// default `127.0.0.1:6666` address is used.
     ///
-    /// @THROWS  tcpip::SocketException  If a connection could not be established.
+    /// @THROWS  types::ConnectionException  If a connection could not be established.
     ///
     /// @DEBUG
     /// `DEBUG_INFO` - Attempt at opening the connection.
@@ -58,7 +58,7 @@ public:
     /// @PARAM[in]      address  The network address of the machine hosting the SUMO instance, in "standard" IPv4 format
     ///                          with an appended process port (`x.x.x.x:n`).
     ///
-    /// @THROWS  tcpip::SocketException  If a connection could not be established.
+    /// @THROWS  types::ConnectionException  If a connection could not be established.
     ///
     /// @DEBUG
     /// `DEBUG_INFO` - Attempt at opening the connection.
@@ -77,7 +77,7 @@ public:
     /// @PARAM[in]      ip    The IP of the machine hosting the SUMO instance, in "standard" IPv4 format (`x.x.x.x`).
     /// @PARAM[in]      port  The process port number of the SUMO instance (see its `--remote-port` option).
     ///
-    /// @THROWS  tcpip::SocketException  If a connection could not be established.
+    /// @THROWS  types::ConnectionException  If a connection could not be established.
     ///
     /// @DEBUG
     /// `DEBUG_INFO` - Attempt at opening the connection.
@@ -92,7 +92,7 @@ public:
     ///
     /// A signal is also sent to SUMO's server instance, requesting the termination of its simulation.
     ///
-    /// @THROWS  tcpip::SocketException  If no connection exists.
+    /// @THROWS  types::ConnectionException  If no connection exists.
     ///
     /// @DEBUG
     /// `DEBUG_INFO` - Closing the connection.

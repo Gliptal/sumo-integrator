@@ -34,6 +34,7 @@ ALIASES                = AUTHOR=@author \
                          INGROUP=@ingroup \
                          INTERNAL=@internal \
                          NAME=@name \
+                         NAMESPACE=@namespace \
                          NOTE=@note \
                          PARAM=@param \
                          RETURN=@returns \

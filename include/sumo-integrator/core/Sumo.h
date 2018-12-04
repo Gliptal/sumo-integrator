@@ -4,6 +4,8 @@
 
 #include <lib/sumo/libsumo.h>
 
+#include <memory>
+
 
 namespace sumointegrator {
 

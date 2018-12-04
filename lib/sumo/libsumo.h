@@ -7,7 +7,4 @@
 #include "lib/sumo/TraCIDefs.h"
 
 
-typedef libsumo::TraCIPosition Position;
-
-
 #endif  // LIB_SUMO_LIBSUMO_H

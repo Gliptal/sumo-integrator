@@ -1,5 +1,7 @@
 #include "include/sumo-integrator/core/Ego.h"
 
+#include "include/sumo-integrator/types/compound.h"
+#include "include/sumo-integrator/types/exception.h"
 #include "include/sumo-integrator/utils/debug.h"
 
 #include <lib/sumo/libsumo.h>
@@ -22,22 +24,22 @@ void Sumo::Ego::subscribe(const std::vector<int>& request, const double radius, 
     LOG_INFO_SUCCESS("subscribed to %s's %.2f (m) context", id.c_str(), radius);
 }
 
-libsumo::SubscriptionResults Sumo::Ego::poll() {
-    libsumo::SubscriptionResults data = api.vehicle.getContextSubscriptionResults(id);
+types::Datamaps Sumo::Ego::poll() {
+    types::Datamaps data = api.vehicle.getContextSubscriptionResults(id);
 
     LOG_DATA("received %d data", data.size());
 
     return data;
 }
 
-void Sumo::Ego::move(const Position& position) {
+void Sumo::Ego::move(const types::Position& position) {
     if (id.empty())
-        throw libsumo::TraCIException("id not set");
+        throw types::RuntimeException("id not set");
 
     move(id, position);
 }
 
-void Sumo::Ego::move(const std::string& id, const Position& position) {
+void Sumo::Ego::move(const std::string& id, const types::Position& position) {
     api.vehicle.moveToXY(id, "", 0, position.x, position.y, -1073741824, 2);
 }
 

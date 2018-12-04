@@ -4,6 +4,7 @@
 
 #include "include/sumo-integrator/core/Concern.h"
 #include "include/sumo-integrator/core/Sumo.h"
+#include "include/sumo-integrator/types/compound.h"
 
 #include <string>
 
@@ -56,18 +57,18 @@ public:
     /// @BRIEF  Poll the neighbouring vehicles data feed.
     ///
     /// It is assumed a subscription was previously made with `subscribe()`. The data is collected in an `std::map`
-    /// (`libsumo::TraCIResults`) and can be index-accessed for usage; the amount of datasets received depends on the
-    /// number of vehicles within the radius specified with `subscribe()`.
+    /// (`types::Datamaps`) and can be index-accessed for usage; the amount of datasets received depends on
+    /// the number of vehicles within the radius specified with `subscribe()`.
     ///
-    /// @RETURN  An `std::map` of entries, the keys being the vehicles and the content being an `std::map` of entries
-    ///          with all the requested data.
+    /// @RETURN  An `std::map` of entries, the keys being the vehicles and the corresponding content being an `std::map`
+    ///          of entries with all the requested data.
     ///
     /// @NOTE  No failure state is returned if no subscription was previously made.
     ///
     /// @DEBUG
     /// `DEBUG_DATA` - Number of datapoints received from the subscription for each vehicle.
     ///
-    libsumo::SubscriptionResults poll();
+    types::Datamaps poll();
 
     ///
     /// @BRIEF  Move an ego entity.
@@ -83,11 +84,11 @@ public:
     ///
     /// @PARAM[in]      position  The target `3D` position.
     ///
-    /// @THROWS  libsumo::TraCIException  If the `id` is not set.
+    /// @THROWS  types::RuntimeException  If the `id` is not set.
     ///
     /// @SEE `move(const std::string&, const Position&)`
     ///
-    void move(const Position&);
+    void move(const types::Position&);
 
     ///
     /// @BRIEF  Move an ego entity.
@@ -104,7 +105,7 @@ public:
     ///
     /// @SEE `move(const Position&)`
     ///
-    void move(const std::string&, const Position&);
+    void move(const std::string&, const types::Position&);
 
     ///
     /// @BRIEF  Get the `id` of the ego entity.

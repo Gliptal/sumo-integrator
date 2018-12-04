@@ -31,8 +31,9 @@ DIR_TEST    = test
 ## FILES
 ##
 
-MODULES = core
+MODULES = core types
 MODULE_CORE = Sumo Concern Connection Ego Entities Simulation
+MODULE_TYPES = base
 
 addaround = $(addprefix $1,$(addsuffix $2,$3))
 
@@ -112,7 +113,7 @@ filter-libs = $(filter-out $(DIR_LIB)/sumo/%.h,$1)
 ## OPTIONS
 ##
 
-.PHONY: help all reset clean clean-all clean-docs docs docs-html library library-core tests test-output-basic test-output-sets test-ego-basic test-ego-async test-ego-subscribe
+.PHONY: help all reset clean clean-all clean-docs docs docs-html library library-core library-types tests test-output-basic test-output-sets test-ego-basic test-ego-async test-ego-subscribe
 
 
 ##
@@ -133,6 +134,7 @@ help:
 	@$(call print-title,"LIBRARY")
 	@$(call print-help,"library","builds and packs the entire library")
 	@$(call print-help,"library-core","builds the library core")
+	@$(call print-help,"library-core","builds the library types")
 	@$(call print-title,"TESTS")
 	@$(call print-help,"tests","builds all the tests")
 	@$(call print-help,"test-output-basic","builds the output-basic test")
@@ -166,7 +168,7 @@ docs: docs-html
 
 docs-html: $(DIR_DOC)/doxygen/output/index.html
 
-$(DIR_DOC)/doxygen/output/index.html: $(call addaround,$(DIR_INCLUDE)/sumo-integrator/,/*.h,$(MODULES)) $(DIR_DOC)/doxygen/doxyfile
+$(DIR_DOC)/doxygen/output/index.html: $(DIR_INCLUDE)/sumo-integrator/*.h $(call addaround,$(DIR_INCLUDE)/sumo-integrator/,/*.h,$(MODULES)) $(DIR_DOC)/doxygen/doxyfile
 	@$(call print-build,"documentation",$^,$?)
 	@cd doc/doxygen; \
 	doxygen doxyfile
@@ -176,15 +178,22 @@ $(DIR_DOC)/doxygen/output/index.html: $(call addaround,$(DIR_INCLUDE)/sumo-integ
 ## LIBRARY
 ##
 
-library: library-core $(DIR_BIN)/lib$(LIB_NAME).a
+library: library-core library-types $(DIR_BIN)/lib$(LIB_NAME).a
 
 library-core: $(call addaround,$(DIR_BUILD)/library/core/,.o,$(MODULE_CORE))
 
-$(DIR_BIN)/lib$(LIB_NAME).a: $(call addaround,$(DIR_BUILD)/library/core/,.o,$(MODULE_CORE))
+library-types: $(call addaround,$(DIR_BUILD)/library/types/,.o,$(MODULE_TYPES))
+
+$(DIR_BIN)/lib$(LIB_NAME).a: $(call addaround,$(DIR_BUILD)/library/core/,.o,$(MODULE_CORE)) $(call addaround,$(DIR_BUILD)/library/types/,.o,$(MODULE_TYPES))
 	@$(call print-pack,"$@",$^,$?)
 	@$(LIB) $(LIB_FLAGS) $@ $^
 
 $(DIR_BUILD)/library/core/%.o: $(DIR_SRC)/core/%.cpp
+	@$(call print-build,"$@",$(call filter-libs,$^),$?)
+	@mkdir -p $(dir $@)
+	@$(CPP) $(CPP_FLAGS) $(CPP_DEFINES) -MMD -c -o $@ $< $(CPP_INCLUDE)
+
+$(DIR_BUILD)/library/types/%.o: $(DIR_SRC)/types/%.cpp
 	@$(call print-build,"$@",$(call filter-libs,$^),$?)
 	@mkdir -p $(dir $@)
 	@$(CPP) $(CPP_FLAGS) $(CPP_DEFINES) -MMD -c -o $@ $< $(CPP_INCLUDE)

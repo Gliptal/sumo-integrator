@@ -1,7 +1,6 @@
 #include "config/test/outputsets.h"
 
 #include <include/sumo-integrator/master.h>
-#include <lib/sumo/libsumo.h>
 
 #include <bitset>
 
@@ -29,16 +28,16 @@ int main() {
             }
 
             if (step >= spawnStep) {
-                libsumo::TraCIResults results = sumo.entities->poll(sumo.vehicle, Settings::Traffic::ID);
+                types::Datamap results = sumo.entities->poll(sumo.vehicle, Settings::Traffic::ID);
 
-                Position* position = (Position*) results[VAR_POSITION3D].get();
-                double angle       = ((libsumo::TraCIDouble*) results[VAR_ANGLE].get())->value;
+                types::Position* position = (types::Position*) results[VAR_POSITION3D].get();
+                double angle              = types::cast_double(results[VAR_ANGLE]);
 
-                double speed        = ((libsumo::TraCIDouble*) results[VAR_SPEED].get())->value;
-                double acceleration = ((libsumo::TraCIDouble*) results[VAR_ACCELERATION].get())->value;
+                double speed        = types::cast_double(results[VAR_SPEED]);
+                double acceleration = types::cast_double(results[VAR_ACCELERATION]);
 
-                std::bitset<16> lights = ((libsumo::TraCIInt*) results[VAR_SIGNALS].get())->value;
-                std::bitset<16> state  = ((libsumo::TraCIInt*) results[VAR_STOPSTATE].get())->value;
+                std::bitset<16> lights = types::cast_int(results[VAR_SIGNALS]);
+                std::bitset<16> state  = types::cast_int(results[VAR_STOPSTATE]);
 
                 std::cout << "\x1b[A\r"
                           << "\x1b[A\r"
