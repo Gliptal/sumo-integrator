@@ -43,10 +43,10 @@ addaround = $(addprefix $1,$(addsuffix $2,$3))
 ##
 
 CPP         = g++
-CPP_FLAGS   = -std=c++11 -Wall
+CPP_FLAGS   = -std=c++11 -Wall -Wextra
 CPP_DEFINES = -DDEBUG_LEVEL=DEBUG_INFO
 CPP_INCLUDE = -I .
-CPP_LIBS    = -L$(DIR_BIN) -L$(DIR_LIB)/sumo -l$(LIB_NAME) -lsumo
+CPP_LIBS    = -L$(DIR_BIN) -L$(DIR_LIB)/sumo -l$(LIB_NAME) -lsumo -lcurses
 
 LIB       = ar
 LIB_FLAGS = -crs
@@ -113,7 +113,7 @@ filter-libs = $(filter-out $(DIR_LIB)/sumo/%.h,$1)
 ## OPTIONS
 ##
 
-.PHONY: help all reset clean clean-all clean-docs docs docs-html library library-core library-types tests test-output-basic test-output-sets test-ego-basic test-ego-async test-ego-subscribe
+.PHONY: help all reset clean clean-library clean-tests clean-all clean-docs docs docs-html library library-core library-types tests test-output-basic test-output-sets test-ego-basic test-ego-async test-ego-input test-ego-subscribe
 
 
 ##
@@ -126,6 +126,8 @@ help:
 	@$(call print-help,"all","builds everything")
 	@$(call print-help,"reset","resets the configuration files")
 	@$(call print-help,"clean","removes build files")
+	@$(call print-help,"clean-library","removes library build files")
+	@$(call print-help,"clean-tests","removes tests build files")
 	@$(call print-help,"clean-all","removes build and binary files")
 	@$(call print-help,"clean-docs","removes compiled documentation files")
 	@$(call print-title,"DOCS")
@@ -141,6 +143,7 @@ help:
 	@$(call print-help,"test-output-sets","builds the output-sets test")
 	@$(call print-help,"test-ego-basic","builds the ego-basic test")
 	@$(call print-help,"test-ego-async","builds the ego-async test")
+	@$(call print-help,"test-ego-input","builds the ego-input test")
 	@$(call print-help,"test-ego-subscribe","builds the ego-subscribe test")
 
 all: library tests
@@ -155,6 +158,14 @@ reset:
 clean:
 	@$(call print-clean,"build folder")
 	-@rm -rf $(DIR_BUILD)/*
+
+clean-library:
+	@$(call print-clean,"library build folder")
+	-@rm -Rf $(DIR_BUILD)/library
+
+clean-tests:
+	@$(call print-clean,"tests build folder")
+	-@rm -Rf $(DIR_BUILD)/test
 
 clean-all: clean
 	@$(call print-clean,"bin folder")
@@ -203,7 +214,7 @@ $(DIR_BUILD)/library/types/%.o: $(DIR_SRC)/types/%.cpp
 ## TESTS
 ##
 
-tests: test-output-basic test-output-sets test-ego-basic test-ego-async test-ego-subscribe
+tests: test-output-basic test-output-sets test-ego-basic test-ego-async test-ego-input test-ego-subscribe
 
 test-output-basic: $(DIR_BIN)/outputbasic.out
 
@@ -212,6 +223,8 @@ test-output-sets: $(DIR_BIN)/outputsets.out
 test-ego-basic: $(DIR_BIN)/egobasic.out
 
 test-ego-async: $(DIR_BIN)/egoasync.out
+
+test-ego-input: $(DIR_BIN)/egoinput.out
 
 test-ego-subscribe: $(DIR_BIN)/egosubscribe.out
 
@@ -228,6 +241,10 @@ $(DIR_BIN)/egobasic.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/egobasic.
 	@$(CPP) -o $@ $^ $(CPP_LIBS)
 
 $(DIR_BIN)/egoasync.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/egoasync.o $(DIR_BUILD)/test/drivers/Driver.o $(DIR_BUILD)/test/drivers/StaticDriver.o
+	@$(call print-link,"$@",$^,$?)
+	@$(CPP) -o $@ $^ $(CPP_LIBS)
+
+$(DIR_BIN)/egoinput.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/egoinput.o $(DIR_BUILD)/test/drivers/Driver.o $(DIR_BUILD)/test/drivers/InputDriver.o
 	@$(call print-link,"$@",$^,$?)
 	@$(CPP) -o $@ $^ $(CPP_LIBS)
 
@@ -250,4 +267,5 @@ $(DIR_BUILD)/test/drivers/%.o: $(DIR_TEST)/drivers/%.cpp
 ## DEPENDENCIES
 ##
 
+-include $(DIR_BUILD)/*/*.d
 -include $(DIR_BUILD)/*/*/*.d
