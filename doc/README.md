@@ -74,7 +74,7 @@ Files related and required by SUMO are _not_ part of this repository.
 
 ### OUTPUT-SETS
 
-**SCOPE** - This functionality test ensures that data about SUMO-driven vehicles can be correctly obtained from the SUMO process.
+**SCOPE** - This functionality test ensures that data about SUMO-driven vehicles can be correctly obtained from the SUMO process, using the sets facilities provided by the library.
 
 **SETUP** - The network is formed by a single two-lane road looped in the shape of a rectangle (dimensioned at 100m x 200m). The SUMO vehicle (yellow car) spawns  adjacent to the North-West corner of the loop.
 
@@ -103,7 +103,7 @@ Files related and required by SUMO are _not_ part of this repository.
 --lateral-resolution 100
 ```
 
-**RESULT** - The ego vehicle (red) should drive the loop in the right lane at different speeds; the SUMO vehicles (yellow) should also drive the loop, organically overtaking the ego vehicle (and possibly each other). Some imprecisions in the curved sections of the road is to be expected.
+**RESULT** - The ego vehicle (red) should drive the loop in the right lane at different pseudo-random speeds; the SUMO vehicles (yellow) should also drive the loop, organically overtaking the ego vehicle (and possibly each other). Some imprecisions in the curved sections of the road are to be expected. The ego's car current speed should be displayed on the `stdout` device.
 
 ### EGO-ASYNC
 
@@ -120,11 +120,11 @@ Files related and required by SUMO are _not_ part of this repository.
 --lateral-resolution 100
 ```
 
-**RESULT** - The ego vehicle (red) should drive the loop in the right lane; the SUMO vehicles (yellow) should also drive the loop, organically overtaking the ego vehicle (and possibly each other). Some imprecisions in the curved sections of the road is to be expected.
+**RESULT** - The ego vehicle (red) should drive the loop in the right lane; the SUMO vehicles (yellow) should also drive the loop, organically overtaking the ego vehicle (and possibly each other). Some imprecisions in the curved sections of the road are to be expected. The current ego's simulation time should be displayed on the `stdout` device, and be synchronized with SUMO's internal simulation time.
 
 ### EGO-INPUT
 
-**SCOPE** - This functionality test ensures that SUMO-driven vehicles correctly interact (e.g. avoid, overtake) with an user-driven ego vehicle. The ego vehicle can be controlled with the 'w' (accelerate), 's' (decelerate) keys, 'a' (switch to left lane) and 'd' (switch to right lane).
+**SCOPE** - This functionality test ensures that SUMO-driven vehicles correctly interact (e.g. avoid, overtake) with an user-driven ego vehicle. The ego vehicle can be controlled with the 'w' (accelerate), 's' (decelerate), 'a' (switch to left lane) and 'd' (switch to right lane) keys.
 
 **SETUP** - The network is formed by a single two-lane road, looped in the shape of a rectangle (dimensioned at 100m x 200m). The ego vehicle (red car) and the SUMO vehicles (yellow cars) spawn adjacent to the North-West corner of the loop, at different times.
 
@@ -139,11 +139,11 @@ Files related and required by SUMO are _not_ part of this repository.
 
 Note that both the `--step-length` and `--default.action-step-length` must be `>= 0.1` (this applies to the test's configuration file as well).
 
-**RESULT** - The ego vehicle (red) should drive the loop at the speed and on the lane set by the user (negative speeds should result in reverse); lane switching is discrete by implementation. The SUMO vehicles (yellow) should also drive the loop, organically overtaking the ego vehicle (and possibly each other). Some imprecisions in the curved sections of the road is to be expected.
+**RESULT** - The ego vehicle (red) should drive the loop at the speed and on the lane set by the user (negative speeds should result in reverse); lane switching is discrete by implementation. The SUMO vehicles (yellow) should also drive the loop, organically overtaking the ego vehicle (and possibly each other). Some imprecisions in the curved sections of the road are to be expected.
 
 ### EGO-SUBSCRIBE
 
-**SCOPE** - This functionality test ensures that ego neighbours subscriptions correctly return the appropriate amount of vehicles, based on a given radius.
+**SCOPE** - This functionality test ensures that ego neighbours subscriptions correctly return the data about all the vehicles within a given radius.
 
 **SETUP** - The network is formed by a single two-lane road, looped in the shape of a rectangle (dimensioned at 100m x 200m). The ego vehicle (red car) and the SUMO vehicles (yellow cars) spawn adjacent to the North-West corner of the loop, at different times.
 
@@ -156,7 +156,7 @@ Note that both the `--step-length` and `--default.action-step-length` must be `>
 --lateral-resolution 100
 ```
 
-**RESULT** - The ego vehicle (red) should drive the loop in the right lane at a lower speed than; the SUMO vehicles (yellow). As the former overtake the latter, the subscribed count should first increase and then decrease back to 0.
+**RESULT** - The ego vehicle (red) should drive the loop in the right lane at a lower speed than; the SUMO vehicles (yellow). As the former overtake the latter, the neighbours count (displayed on the `stdout` device) should first increase and then decrease back to 0.
 
 ## CHANGELOG
 

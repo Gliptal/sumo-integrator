@@ -136,7 +136,7 @@ help:
 	@$(call print-title,"LIBRARY")
 	@$(call print-help,"library","builds and packs the entire library")
 	@$(call print-help,"library-core","builds the library core")
-	@$(call print-help,"library-core","builds the library types")
+	@$(call print-help,"library-types","builds the library types")
 	@$(call print-title,"TESTS")
 	@$(call print-help,"tests","builds all the tests")
 	@$(call print-help,"test-output-basic","builds the output-basic test")
