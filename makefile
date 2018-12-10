@@ -113,7 +113,7 @@ filter-libs = $(filter-out $(DIR_LIB)/sumo/%.h,$1)
 ## OPTIONS
 ##
 
-.PHONY: help all reset clean clean-library clean-tests clean-all clean-docs docs docs-html library library-core library-types tests test-output-basic test-output-sets test-ego-basic test-ego-async test-ego-input test-ego-subscribe
+.PHONY: help all reset clean clean-library clean-tests clean-all clean-docs docs docs-html library library-core library-types tests test-output-basic test-output-sets test-output-multiple test-ego-basic test-ego-async test-ego-input test-ego-subscribe
 
 
 ##
@@ -141,6 +141,7 @@ help:
 	@$(call print-help,"tests","builds all the tests")
 	@$(call print-help,"test-output-basic","builds the output-basic test")
 	@$(call print-help,"test-output-sets","builds the output-sets test")
+	@$(call print-help,"test-output-multiple","builds the output-multiple test")
 	@$(call print-help,"test-ego-basic","builds the ego-basic test")
 	@$(call print-help,"test-ego-async","builds the ego-async test")
 	@$(call print-help,"test-ego-input","builds the ego-input test")
@@ -214,11 +215,13 @@ $(DIR_BUILD)/library/types/%.o: $(DIR_SRC)/types/%.cpp
 ## TESTS
 ##
 
-tests: test-output-basic test-output-sets test-ego-basic test-ego-async test-ego-input test-ego-subscribe
+tests: test-output-basic test-output-sets test-ego-basic test-output-multiple test-ego-async test-ego-input test-ego-subscribe
 
 test-output-basic: $(DIR_BIN)/outputbasic.out
 
 test-output-sets: $(DIR_BIN)/outputsets.out
+
+test-output-multiple: $(DIR_BIN)/outputmultiple.out
 
 test-ego-basic: $(DIR_BIN)/egobasic.out
 
@@ -233,6 +236,10 @@ $(DIR_BIN)/outputbasic.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/output
 	@$(CPP) -o $@ $^ $(CPP_LIBS)
 
 $(DIR_BIN)/outputsets.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/outputsets.o
+	@$(call print-link,"$@",$^,$?)
+	@$(CPP) -o $@ $^ $(CPP_LIBS)
+
+$(DIR_BIN)/outputmultiple.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/outputmultiple.o
 	@$(call print-link,"$@",$^,$?)
 	@$(CPP) -o $@ $^ $(CPP_LIBS)
 

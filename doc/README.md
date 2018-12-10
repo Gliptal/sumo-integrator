@@ -10,6 +10,7 @@
 - [TESTING](#testing)
     - [OUTPUT-BASIC](#output-basic)
     - [OUTPUT-SETS](#output-sets)
+    - [OUTPUT-SETS](#output-multiple)
     - [EGO-BASIC](#ego-basic)
     - [EGO-ASYNC](#ego-async)
     - [EGO-INPUT](#ego-input)
@@ -87,6 +88,22 @@ Files related and required by SUMO are _not_ part of this repository.
 ```
 
 **RESULT** - The SUMO vehicle (yellow) should drive the loop in the right lane; its position, angle, speed, acceleration, lights state, and stop state should be displayed on the `stdout` device.
+
+### OUTPUT-MULTIPLE
+
+**SCOPE** - This functionality test ensures that data about SUMO-driven vehicles can be correctly obtained from the SUMO process for multiple vehicles simultaneously.
+
+**SETUP** - The network is formed by a single two-lane road looped in the shape of a rectangle (dimensioned at 100m x 200m). The SUMO vehicles (yellow cars) spawn  adjacent to the North-West corner of the loop.
+
+**RUN** - SUMO must be started _before_ `outputmultiple.out` with the following options:
+
+```
+-c outputmultiple.sumocfg
+--step-length 0.01
+--default.action-step-length 0.01
+```
+
+**RESULT** - The SUMO vehicles (yellow) should drive the loop in the right lane; their  position, angle, and speed should be displayed on the `stdout` device.
 
 ### EGO-BASIC
 
