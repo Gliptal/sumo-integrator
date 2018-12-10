@@ -17,11 +17,4 @@ const double END_TIME = 120;
 
 }  // namespace Simulation
 
-namespace Traffic {
-
-const std::string ID    = "traffic.0";
-const double START_TIME = 4;
-
-}  // namespace Traffic
-
 }  // namespace Settings

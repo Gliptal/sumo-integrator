@@ -10,25 +10,26 @@ using namespace sumointegrator;
 
 int main() {
     try {
+        std::vector<std::string> subscribed;
+
         Sumo sumo;
         sumo.connection->open(Settings::Network::IP, Settings::Network::PORT);
 
         uint steps = Settings::Simulation::END_TIME / Settings::Simulation::TICKRATE;
         for (uint step = 0; step < steps; step++) {
-            uint spawnStep = Settings::Traffic::START_TIME / Settings::Simulation::TICKRATE;
-
             sumo.simulation->tick();
 
-            if (step == spawnStep) {
+            std::vector<std::string> spawning = sumo.entities->list_spawning(true, "traffic");
+            if (subscribed.empty() && !spawning.empty()) {
                 std::vector<int> request {VAR_POSITION3D, VAR_ANGLE, VAR_SPEED};
-
-                sumo.entities->subscribe(sumo.vehicle, Settings::Traffic::ID, request, Settings::Traffic::START_TIME, Settings::Simulation::END_TIME);
+                sumo.entities->subscribe(sumo.vehicle, spawning[0], request, 0, Settings::Simulation::END_TIME);
+                subscribed.push_back(spawning[0]);
 
                 std::cout << "\n";
             }
 
-            if (step >= spawnStep) {
-                types::Datamap results = sumo.entities->poll(sumo.vehicle, Settings::Traffic::ID);
+            if (!subscribed.empty()) {
+                types::Datamap results = sumo.entities->poll(sumo.vehicle, subscribed[0]);
 
                 types::Position* position = (types::Position*) results[VAR_POSITION3D].get();
                 double angle              = types::cast_double(results[VAR_ANGLE]);

@@ -44,6 +44,41 @@ public:
     ~Entities();
 
     ///
+    /// @BRIEF  List the entities spawned at the previous tick.
+    ///
+    /// %Entities of all types are listed. Only entities that were actually spawned are listed, and not entities that
+    /// were scheduled to be but could not due to other factors.
+    ///
+    /// @RETURN  An `std::vector` of `std::string`s with  the `id`s of the entities spawned at the previous tick.
+    ///
+    /// @DEBUG
+    /// `DEBUG_DATA` - Number of entities in the list.
+    ///
+    /// @SEE  list_spawning(const bool, const std::string&)
+    ///
+    std::vector<std::string> list_spawning();
+
+    ///
+    /// @BRIEF  List the entities spawned at the previous tick.
+    ///
+    /// %Entities of all types that pass the given filter are listed. Only entities that were actually spawned are
+    /// listed, and not entities that were scheduled to be but could not due to other factors. The filter's behaviour
+    /// depends on the `keep` parameter: if `true` the list will contain all those `id`s that _do_ contain the supplied
+    /// string; if `false` the list will contain all those `id`s that _do not_ contain the supplied string.
+    ///
+    /// @PARAM[in]      keep    Whether the filter should keep or discard the `id`s that contain `filter`.
+    /// @PARAM[in]      filter  The string to be filtered.
+    ///
+    /// @RETURN  An `std::vector` of `std::string`s with  the `id`s of the entities spawned at the previous tick.
+    ///
+    /// @DEBUG
+    /// `DEBUG_DATA` - Number of entities in the list (before and after filtering).
+    ///
+    /// @SEE  list_spawning()
+    ///
+    std::vector<std::string> list_spawning(const bool, const std::string&);
+
+    ///
     /// @BRIEF  Subscribe to an entity's data feed.
     ///
     /// Once subscribed to a data feed, on each SUMO simulation tick that data is made available through `poll()`.

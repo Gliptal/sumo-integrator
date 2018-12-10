@@ -19,6 +19,34 @@ Sumo::Entities::Entities(TraCIAPI& api)
 Sumo::Entities::~Entities() {
 }
 
+std::vector<std::string> Sumo::Entities::list_spawning(const bool keep, const std::string& filter) {
+    std::vector<std::string> original = api.simulation.getDepartedIDList();
+    std::vector<std::string> filtered;
+
+    if (keep) {
+        for (auto i = original.begin(); i != original.end(); i++)
+            if ((*i).find(filter) != std::string::npos)
+                filtered.push_back(*i);
+    }
+    else {
+        for (auto i = original.begin(); i != original.end(); i++)
+            if ((*i).find(filter) == std::string::npos)
+                filtered.push_back(*i);
+    }
+
+    LOG_DATA("spawning %d/%d (filtered)", original.size(), filtered.size());
+
+    return filtered;
+}
+
+std::vector<std::string> Sumo::Entities::list_spawning() {
+    std::vector<std::string> list = api.simulation.getDepartedIDList();
+
+    LOG_DATA("spawning %d entities", list.size());
+
+    return list;
+}
+
 void Sumo::Entities::subscribe(TraCIAPI::TraCIScopeWrapper& entity, const std::string& id, const std::vector<int>& request, const double start, const double end) {
     entity.subscribe(id, request, start, end);
 
