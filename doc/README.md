@@ -14,6 +14,7 @@
     - [EGO-BASIC](#ego-basic)
     - [EGO-ASYNC](#ego-async)
     - [EGO-INPUT](#ego-input)
+    - [EGO-FREE](#ego-free)
     - [EGO-SUBSCRIBE](#ego-subscribe)
 - [CHANGELOG](#changelog)
 
@@ -157,6 +158,25 @@ Files related and required by SUMO are _not_ part of this repository.
 Note that both the `--step-length` and `--default.action-step-length` must be `>= 0.1` (this applies to the test's configuration file as well).
 
 **RESULT** - The ego vehicle (red) should drive the loop at the speed and on the lane set by the user (negative speeds should result in reverse); lane switching is discrete by implementation. The SUMO vehicles (yellow) should also drive the loop, organically overtaking the ego vehicle (and possibly each other). Some imprecisions in the curved sections of the road are to be expected.
+
+### EGO-FREE
+
+**SCOPE** - This functionality test ensures that SUMO-driven vehicles correctly interact (e.g. avoid, overtake) with an user-driven ego vehicle. The ego vehicle can be controlled with the 'w' (accelerate), 's' (decelerate), 'a' (turn left) and 'd' (turn right) keys.
+
+**SETUP** - The network is formed by a single two-lane road, looped in the shape of a rectangle (dimensioned at 100m x 200m). The ego vehicle (red car) and the SUMO vehicles (yellow cars) spawn adjacent to the North-West corner of the loop, at different times.
+
+**RUN** - SUMO must be started _before_ `egofree.out` with the following options:
+
+```
+-c egofree.sumocfg
+--step-length 0.1
+--default.action-step-length 0.1
+--lateral-resolution 100
+```
+
+Note that both the `--step-length` and `--default.action-step-length` must be `>= 0.1` (this applies to the test's configuration file as well).
+
+**RESULT** - The ego vehicle (red) should drive based on the user's input (negative speeds should result in reverse). The SUMO vehicles (yellow) should also drive the loop, organically overtaking the ego vehicle (and possibly each other).
 
 ### EGO-SUBSCRIBE
 

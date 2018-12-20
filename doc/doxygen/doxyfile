@@ -33,6 +33,8 @@ ALIASES                = AUTHOR=@author \
                          IF=@if \
                          INGROUP=@ingroup \
                          INTERNAL=@internal \
+                         MODDATE=@date \
+                         MODVERSION=@version \
                          NAME=@name \
                          NAMESPACE=@namespace \
                          NOTE=@note \

@@ -6,6 +6,7 @@
 
 #include <lib/sumo/libsumo.h>
 
+#include <cmath>
 #include <string>
 
 
@@ -37,6 +38,12 @@ void Sumo::Ego::move(const types::Position& position) {
         throw types::RuntimeException("id not set");
 
     move(id, position);
+}
+
+void Sumo::Ego::move(const types::Position& position, const double yaw) {
+    double angle = yaw * (180 / M_PI);
+
+    api.vehicle.moveToXY(id, "", 0, position.x, position.y, angle, 2);
 }
 
 void Sumo::Ego::move(const std::string& id, const types::Position& position) {

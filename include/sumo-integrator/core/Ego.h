@@ -14,9 +14,9 @@ namespace sumointegrator {
 ///
 /// @AUTHOR            Mattia Affabris - mattia.affabris@antemotion.com
 /// @DATE              2018-11-26
-/// @DATE              2018-11-29
+/// @MODDATE           2018-12-14
 /// @VERSION           0.4.0-alpha4
-/// @VERSION           3
+/// @MODVERSION        4
 /// @COPYRIGHT         Copyright (C) (2018) AnteMotion
 ///
 /// @BRIEF  Exposes facilities related to the ego entity.
@@ -75,7 +75,7 @@ public:
     ///
     /// The ego entity is placed at the given coordinates, with no interpolation or extrapolation made on its state
     /// vectors between subsequent `move()`s. SUMO is capable of interacting with this ego entity based on (subsequent)
-    /// position(s) alone.
+    /// position(s) alone. The yaw angle is set by SUMO based on internal logic.
     ///
     /// @NOTE  The `id` of the SUMO entity acting as the ego entity must be set first with `set_id()`.
     ///
@@ -89,6 +89,28 @@ public:
     /// @SEE `move(const std::string&, const Position&)`
     ///
     void move(const types::Position&);
+
+    ///
+    /// @BRIEF  Move an ego entity.
+    ///
+    /// The ego entity is placed at the given coordinates, with no interpolation or extrapolation made on its state
+    /// vectors between subsequent `move()`s. SUMO is capable of interacting with this ego entity based on (subsequent)
+    /// position(s) alone.
+    ///
+    /// @NOTE  The `id` of the SUMO entity acting as the ego entity must be set first with `set_id()`.
+    ///
+    /// @UNITS
+    /// `position`  meters (m), meters (m), meters (m)
+    /// `yaw`       radians (rad)
+    ///
+    /// @PARAM[in]      position  The target `3D` position.
+    /// @PARAM[in]      yaw       The target yaw angle.
+    ///
+    /// @THROWS  types::RuntimeException  If the `id` is not set.
+    ///
+    /// @SEE `move(const std::string&, const Position&)`
+    ///
+    void move(const types::Position&, const double yaw);
 
     ///
     /// @BRIEF  Move an ego entity.

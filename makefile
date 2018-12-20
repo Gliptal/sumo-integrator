@@ -113,7 +113,7 @@ filter-libs = $(filter-out $(DIR_LIB)/sumo/%.h,$1)
 ## OPTIONS
 ##
 
-.PHONY: help all reset clean clean-library clean-tests clean-all clean-docs docs docs-html library library-core library-types tests test-output-basic test-output-sets test-output-multiple test-ego-basic test-ego-async test-ego-input test-ego-subscribe
+.PHONY: help all reset clean clean-library clean-tests clean-all clean-docs docs docs-html library library-core library-types tests test-output-basic test-output-sets test-output-multiple test-ego-basic test-ego-async test-ego-input test-ego-free test-ego-subscribe
 
 
 ##
@@ -145,6 +145,7 @@ help:
 	@$(call print-help,"test-ego-basic","builds the ego-basic test")
 	@$(call print-help,"test-ego-async","builds the ego-async test")
 	@$(call print-help,"test-ego-input","builds the ego-input test")
+	@$(call print-help,"test-ego-free","builds the ego-free test")
 	@$(call print-help,"test-ego-subscribe","builds the ego-subscribe test")
 
 all: library tests
@@ -215,7 +216,7 @@ $(DIR_BUILD)/library/types/%.o: $(DIR_SRC)/types/%.cpp
 ## TESTS
 ##
 
-tests: test-output-basic test-output-sets test-ego-basic test-output-multiple test-ego-async test-ego-input test-ego-subscribe
+tests: test-output-basic test-output-sets test-ego-basic test-output-multiple test-ego-async test-ego-input test-ego-free test-ego-subscribe
 
 test-output-basic: $(DIR_BIN)/outputbasic.out
 
@@ -228,6 +229,8 @@ test-ego-basic: $(DIR_BIN)/egobasic.out
 test-ego-async: $(DIR_BIN)/egoasync.out
 
 test-ego-input: $(DIR_BIN)/egoinput.out
+
+test-ego-free: $(DIR_BIN)/egofree.out
 
 test-ego-subscribe: $(DIR_BIN)/egosubscribe.out
 
@@ -252,6 +255,10 @@ $(DIR_BIN)/egoasync.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/egoasync.
 	@$(CPP) -o $@ $^ $(CPP_LIBS)
 
 $(DIR_BIN)/egoinput.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/egoinput.o $(DIR_BUILD)/test/drivers/Driver.o $(DIR_BUILD)/test/drivers/InputDriver.o
+	@$(call print-link,"$@",$^,$?)
+	@$(CPP) -o $@ $^ $(CPP_LIBS)
+
+$(DIR_BIN)/egofree.out: $(DIR_BIN)/lib$(LIB_NAME).a $(DIR_BUILD)/test/egofree.o $(DIR_BUILD)/test/drivers/Driver.o $(DIR_BUILD)/test/drivers/FreeDriver.o
 	@$(call print-link,"$@",$^,$?)
 	@$(CPP) -o $@ $^ $(CPP_LIBS)
 

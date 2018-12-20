@@ -13,9 +13,9 @@ namespace sumointegrator {
 ///
 /// @AUTHOR            Mattia Affabris - mattia.affabris@antemotion.com
 /// @DATE              2018-11-23
-/// @DATE              2018-11-29
+/// @MODDATE           2018-11-29
 /// @VERSION           0.4.0-alpha4
-/// @VERSION           2
+/// @MODVERSION        2
 /// @COPYRIGHT         Copyright (C) (2018) AnteMotion
 ///
 /// @BRIEF  Exposes facilities related to the client-SUMO connection.
